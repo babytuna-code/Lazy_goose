@@ -1,0 +1,157 @@
+/* ratioequal.css : สไตล์ของแต่ละหัวข้อในหน้านี้ (scope ด้วย .pg-ชื่อหน้าเดิม)
+   โครงการ์ด/ลูกเล่นอยู่ใน ../common/scroll.css และ scroll.js */
+
+/* ===== จากหน้า ratioch1-6.html ===== */
+.pg-ratioch1-6 .bread-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.6em;
+    width: 100%;
+}
+
+.pg-ratioch1-6 .bread-pic {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pg-ratioch1-6 .bread-pic svg {
+    width: 3.9em;
+    margin-left: -1.3em;
+}
+
+.pg-ratioch1-6 .bread-pic svg:first-child {
+    margin-left: 0;
+}
+
+.pg-ratioch1-6 .price {
+    font-weight: 600;
+}
+
+.pg-ratioch1-6 .coins {
+    display: flex;
+    gap: 0.15em;
+}
+
+.pg-ratioch1-6 .bread-cap {
+    margin-top: -0.4em;
+    font-size: 0.92em;
+    font-weight: 600;
+}
+
+.pg-ratioch1-6 .bread-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35em;
+    width: 100%;
+}
+
+/* ===== จากหน้า ratioch1-7.html ===== */
+.pg-ratioch1-7 .frac-table {
+    font-size: 0.86em;
+}
+
+.pg-ratioch1-7 .frac-table th {
+    font-size: 0.95em;
+}
+
+.pg-ratioch1-7 .frac-table td {
+    white-space: nowrap;
+}
+
+/* ===== จากหน้า ratioch1-8.html ===== */
+.pg-ratioch1-8 .game-board {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 0.95;
+
+    background: var(--cream);
+    border: 3px solid var(--ink);
+}
+
+.pg-ratioch1-8 .ratio-chip {
+    position: absolute;
+    padding: 0.15em 0.6em;
+
+    background: #2fbf6b;
+    color: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    box-shadow: 0 3px 0 var(--ink);
+
+    font-size: 1.35em;
+    font-weight: 700;
+    -webkit-text-stroke: 1px var(--ink);
+    paint-order: stroke fill;
+    white-space: nowrap;
+
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.pg-ratioch1-8 .ratio-chip:hover {
+    filter: brightness(1.06);
+}
+
+.pg-ratioch1-8 .ratio-chip.selected {
+    background: var(--mint);
+    transform: scale(1.08);
+    outline: 3px dashed var(--ink);
+    outline-offset: 2px;
+}
+
+.pg-ratioch1-8 .ratio-chip.correct {
+    background: #ffd84d;
+    outline: 3px solid var(--ink);
+}
+
+.pg-ratioch1-8 .ratio-chip.wrong {
+    background: var(--red);
+    animation: shake 0.4s ease;
+}
+
+.pg-ratioch1-8 .ratio-chip:disabled {
+    cursor: default;
+    color: #fff;
+    opacity: 1;
+}
+
+@keyframes shake {
+    0%, 100% { translate: 0; }
+    25% { translate: -5px; }
+    75% { translate: 5px; }
+}
+
+.pg-ratioch1-8 .board-goose {
+    position: absolute;
+    right: 1%;
+    bottom: -3%;
+    width: 27%;
+    
+    aspect-ratio: 1.55;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.pg-ratioch1-8 .game-hint {
+    color: var(--red);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.pg-ratioch1-8 .game-win {
+    color: #008b4b;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.pg-ratioch1-8 .retry-link {
+    padding: 6px 20px;
+    background: #fffaf0;
+    border: 2px solid var(--ink);
+    border-radius: 30px;
+    box-shadow: 0 3px 0 var(--ink);
+    font-weight: 700;
+    cursor: pointer;
+}

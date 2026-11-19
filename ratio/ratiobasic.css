@@ -1,0 +1,51 @@
+/* ratiobasic.css : สไตล์ของแต่ละหัวข้อในหน้านี้ (scope ด้วย .pg-ชื่อหน้าเดิม)
+   โครงการ์ด/ลูกเล่นอยู่ใน ../common/scroll.css และ scroll.js */
+
+/* ===== จากหน้า ratioans.html ===== */
+.pg-ratioans .ab-big {
+    margin: 0.2em 0;
+    font-size: 2.4em;
+    font-weight: 700;
+    line-height: 1.2;
+    -webkit-text-stroke: 1px var(--ink);
+    paint-order: stroke fill;
+}
+
+/* ===== จากหน้า ratiorate.html ===== */
+.pg-ratiorate .rate-list { display: flex; gap: 0.6em; justify-content: center; text-align: left; line-height: 1.8;
+}
+
+.pg-ratiorate .rate-list ul { list-style: none;
+}
+
+.pg-ratiorate .rate-list li { white-space: nowrap;
+}
+
+.pg-ratiorate .rate-key { color: var(--pop); font-weight: 400;
+}
+
+/* ===== จากหน้า ratioch1-2.html ===== */
+.pg-ratioch1-2 .flashcard .icon-row {
+    flex-wrap: nowrap;   
+    gap: 0.4em;
+    margin: 0.6em 0 0.3em;
+}
+
+.pg-ratioch1-2 .flashcard .icon-row svg {
+    width: 5.2em;
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+.pg-ratioch1-2 .flashcard .icon-row svg:last-child {
+    width: 5.6em;
+}
+
+.pg-ratioch1-2 .card-question {
+    font-size: 1.85em;
+}
+
+/* ===== จากหน้า ratioch1-3.html ===== */
+.pg-ratioch1-3 .flashcard-face.front .flashcard-big {
+    font-size: 2.3em;
+}
