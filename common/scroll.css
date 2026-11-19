@@ -2041,3 +2041,89 @@ html body .tip-overlay { z-index: 30000 !important; }
 
 /* หัวข้อการ์ดหน้ารวมบท: กลุ่มคำที่ไม่ให้ตัดบรรทัด (เช่น "หลาย ๆ จำนวน") */
 .topic-title .nw { white-space: nowrap; }
+
+/* =====================================================
+   กองแฟลชการ์ด (โจทย์ตัวอย่าง บทอัตราส่วน)
+   แตะเพื่อพลิกดูคำตอบ → ปัด/กด "ถัดไป" เพื่อดูใบต่อไป (ต้องพลิกก่อน)
+===================================================== */
+.fc-deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.fc-stack {
+    position: relative;
+    width: 100%;
+    max-width: 330px;
+    aspect-ratio: 1.2 / 1;
+    margin-bottom: 26px;           /* เผื่อขอบการ์ดใบหลังที่โผล่ลงมา */
+    touch-action: pan-y;           /* เลื่อนหน้าขึ้นลงได้ ปัดซ้ายขวาเป็นของการ์ด */
+}
+
+.fc-stack .flashcard {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 0.72em;
+    max-width: none !important;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.fc-stack .flashcard[data-pos="0"] { z-index: 3; }
+.fc-stack .flashcard[data-pos="1"] { z-index: 2; transform: translateY(14px) scale(0.95); }
+.fc-stack .flashcard[data-pos="2"] { z-index: 1; transform: translateY(28px) scale(0.9); }
+.fc-stack .flashcard[data-pos="hide"] { opacity: 0; pointer-events: none; transform: translateY(28px) scale(0.9); }
+.fc-stack .flashcard[data-pos="1"],
+.fc-stack .flashcard[data-pos="2"] { pointer-events: none; }
+.fc-stack .flashcard.gone-l { z-index: 4; transform: translateX(-130%) rotate(-16deg); opacity: 0; pointer-events: none; }
+.fc-stack .flashcard.gone-r { z-index: 4; transform: translateX(130%) rotate(16deg); opacity: 0; pointer-events: none; }
+.fc-stack .flashcard.dragging { transition: none; }
+
+/* ยังไม่พลิกแต่พยายามปัด: สั่นเตือน */
+.fc-stack .flashcard.nudge { animation: fc-nudge 0.4s; }
+@keyframes fc-nudge {
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+}
+
+.fc-q { font-size: 1.9em; }
+.fc-sub { font-size: 0.72em; color: var(--ink, #2b2622); -webkit-text-stroke: 0; font-weight: 700; }
+
+.fc-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+}
+
+.fc-count {
+    font-weight: 700;
+    min-width: 3em;
+    text-align: center;
+}
+
+.fc-next {
+    padding: 0.2em 1em 0.3em;
+    background: #fffaf0;
+    border: 2px solid var(--line, #3b2516);
+    border-radius: 30px;
+    box-shadow: 0 3px 0 var(--line, #3b2516);
+    font: inherit;
+    font-weight: 700;
+    color: inherit;
+    cursor: pointer;
+}
+
+.fc-next:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.fc-hint.warn { color: #c0392b; }
