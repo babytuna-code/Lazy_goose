@@ -2059,7 +2059,7 @@ html body .tip-overlay { z-index: 30000 !important; }
     width: 100%;
     max-width: 330px;
     aspect-ratio: 1.2 / 1;
-    margin-bottom: 26px;           /* เผื่อขอบการ์ดใบหลังที่โผล่ลงมา */
+    margin-bottom: 30px;           /* เผื่อขอบการ์ดใบหลังที่โผล่ลงมา */
     touch-action: pan-y;           /* เลื่อนหน้าขึ้นลงได้ ปัดซ้ายขวาเป็นของการ์ด */
 }
 
@@ -2076,9 +2076,9 @@ html body .tip-overlay { z-index: 30000 !important; }
 }
 
 .fc-stack .flashcard[data-pos="0"] { z-index: 3; }
-.fc-stack .flashcard[data-pos="1"] { z-index: 2; transform: translateY(14px) scale(0.95); }
-.fc-stack .flashcard[data-pos="2"] { z-index: 1; transform: translateY(28px) scale(0.9); }
-.fc-stack .flashcard[data-pos="hide"] { opacity: 0; pointer-events: none; transform: translateY(28px) scale(0.9); }
+.fc-stack .flashcard[data-pos="1"] { z-index: 2; transform: translateY(16px) translateX(-6px) rotate(-3deg) scale(0.95); }
+.fc-stack .flashcard[data-pos="2"] { z-index: 1; transform: translateY(26px) translateX(8px) rotate(2.5deg) scale(0.92); }
+.fc-stack .flashcard[data-pos="hide"] { opacity: 0; pointer-events: none; transform: translateY(26px) translateX(8px) rotate(2.5deg) scale(0.92); }
 .fc-stack .flashcard[data-pos="1"],
 .fc-stack .flashcard[data-pos="2"] { pointer-events: none; }
 .fc-stack .flashcard.gone-l { z-index: 4; transform: translateX(-130%) rotate(-16deg); opacity: 0; pointer-events: none; }
