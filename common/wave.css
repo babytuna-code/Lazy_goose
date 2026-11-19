@@ -118,7 +118,7 @@
     bottom: calc(var(--bh) * 0.1);
     height: var(--tree-h);
     aspect-ratio: 34 / 34;
-    background-image: url("../pics/la-tree.svg?v=20261119w");
+    background-image: url("../pics/la-tree.svg?v=20261119x");
 }
 
 .lg-grass {
@@ -126,7 +126,7 @@
     bottom: calc(var(--bh) * 0.1);
     height: calc(var(--tree-h) * 7 / 34 * 1.15);
     aspect-ratio: 22 / 7;
-    background-image: url("../pics/la-grass.svg?v=20261119w");
+    background-image: url("../pics/la-grass.svg?v=20261119x");
 }
 
 .lg-castle {
@@ -135,7 +135,7 @@
     visibility: hidden;                 /* theme.js วางบนผิวเนินแล้วจึงแสดง */
     height: calc(var(--daisy-h) * 0.95);
     aspect-ratio: 42 / 38;
-    background-image: url("../pics/la-castle.svg?v=20261119w");
+    background-image: url("../pics/la-castle.svg?v=20261119x");
 }
 
 /* ดอกเดซี่ก็อยู่หลังการ์ดเช่นกัน (อยู่หน้าปราสาท) */
@@ -179,7 +179,7 @@ html,
 body {
     /* พื้นหลังแบบภาพตัวอย่าง: ครีมเหลือง + ก้อนเมฆเหลืองเรียบไม่มีเส้นขอบ อยู่นิ่ง (ภาพ la-sky.svg เต็มจอ) */
     background-color: #fff2a6 !important;
-    background-image: url("../pics/la-sky.svg?v=20261119w") !important;
+    background-image: url("../pics/la-sky.svg?v=20261119x") !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: center !important;

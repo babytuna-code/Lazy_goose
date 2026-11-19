@@ -2127,3 +2127,6 @@ html body .tip-overlay { z-index: 30000 !important; }
 }
 
 .fc-hint.warn { color: #c0392b; }
+
+/* กองแฟลชการ์ด: เงาขอบล่างสีน้ำตาลบางลง */
+.fc-stack .flashcard .flashcard-face { box-shadow: 0 2px 0 var(--line); }
