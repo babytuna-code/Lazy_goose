@@ -11,31 +11,61 @@
             question: "จงหาค่าของ a จากสัดส่วน a : 12 = 3 : 4",
             choices: ["9", "16", "8"],
             correctAnswer: "9",
-            explanation: "จากสัดส่วน a : 12 = 3 : 4 คูณไขว้จะได้ a × 4 = 12 × 3 ดังนั้น a = 36 ÷ 4 = 9"
+            explanation: [
+                "จาก a : 12 = 3 : 4 เขียนเป็นสัดส่วนได้ {a|12} = {3|4}",
+                "คูณไขว้ จะได้ a × 4 = 12 × 3",
+                "a × 4 = 36",
+                "a = {36|4} = 9",
+                "ดังนั้น a = 9"
+            ]
         },
         {
             question: "จงหาค่าของ b จากสัดส่วน 5 : 8 = 15 : b",
             choices: ["24", "18", "40"],
             correctAnswer: "24",
-            explanation: "จากสัดส่วน 5 : 8 = 15 : b คูณไขว้จะได้ 5 × b = 8 × 15 ดังนั้น b = 120 ÷ 5 = 24"
+            explanation: [
+                "จาก 5 : 8 = 15 : b เขียนเป็นสัดส่วนได้ {5|8} = {15|b}",
+                "คูณไขว้ จะได้ 5 × b = 8 × 15",
+                "5 × b = 120",
+                "b = {120|5} = 24",
+                "ดังนั้น b = 24"
+            ]
         },
         {
             question: "จงหาค่าของ m จากสัดส่วน 2 : m = 6 : 21",
             choices: ["7", "9", "63"],
             correctAnswer: "7",
-            explanation: "จากสัดส่วน 2 : m = 6 : 21 คูณไขว้จะได้ 2 × 21 = m × 6 ดังนั้น m = 42 ÷ 6 = 7"
+            explanation: [
+                "จาก 2 : m = 6 : 21 เขียนเป็นสัดส่วนได้ {2|m} = {6|21}",
+                "คูณไขว้ จะได้ m × 6 = 2 × 21",
+                "m × 6 = 42",
+                "m = {42|6} = 7",
+                "ดังนั้น m = 7"
+            ]
         },
         {
             question: "จงหาค่าของ n จากสัดส่วน 9 : 4 = n : 20",
             choices: ["45", "36", "25"],
             correctAnswer: "45",
-            explanation: "จากสัดส่วน 9 : 4 = n : 20 คูณไขว้จะได้ 9 × 20 = 4 × n ดังนั้น n = 180 ÷ 4 = 45"
+            explanation: [
+                "จาก 9 : 4 = n : 20 เขียนเป็นสัดส่วนได้ {9|4} = {n|20}",
+                "คูณไขว้ จะได้ 4 × n = 9 × 20",
+                "4 × n = 180",
+                "n = {180|4} = 45",
+                "ดังนั้น n = 45"
+            ]
         },
         {
             question: "จงหาค่าของ k จากสัดส่วน k : 6 = 10 : 15",
             choices: ["4", "9", "25"],
             correctAnswer: "4",
-            explanation: "จากสัดส่วน k : 6 = 10 : 15 คูณไขว้จะได้ k × 15 = 6 × 10 ดังนั้น k = 60 ÷ 15 = 4"
+            explanation: [
+                "จาก k : 6 = 10 : 15 เขียนเป็นสัดส่วนได้ {k|6} = {10|15}",
+                "คูณไขว้ จะได้ k × 15 = 6 × 10",
+                "k × 15 = 60",
+                "k = {60|15} = 4",
+                "ดังนั้น k = 4"
+            ]
         }
     ];
 
@@ -330,10 +360,16 @@
             feedbackTitle.className = "feedback-title wrong";
         }
 
-        feedbackMessage.textContent =
-            `คุณเลือก ${selectedAnswer} ` +
-            `เฉลยคือ ${currentQuestion.correctAnswer} ` +
-            currentQuestion.explanation;
+        // แสดงคำตอบ + วิธีทำเป็นขั้น ๆ (แปลง {a|b} เป็นเศษส่วน) แบบเดียวกับเฉลยแบบทดสอบรวมบท
+        const toFraction = text => text.replace(/\{([^|{}]+)\|([^{}]+)\}/g,
+            '<span class="frac"><span>$1</span><span>$2</span></span>');
+
+        feedbackMessage.innerHTML =
+            `<span class="sol-head">` + `คุณเลือก ${selectedAnswer} ` +
+            `เฉลยคือ ${currentQuestion.correctAnswer} ` + `</span>` +
+            `<span class="sol-box"><span class="sol-label">วิธีทำ</span>` +
+            currentQuestion.explanation.map(toFraction).join("<br>") +
+            `</span>`;
 
         feedback.hidden = false;
 

@@ -1,0 +1,438 @@
+/* =====================================================
+   gamebuttons.css — ปุ่ม "ส่งคำตอบ" และ "ถัดไป" ในหน้าเกมท้ายบท
+   ให้ขนาดเท่ากัน และอยู่ตำแหน่งเดียวกันทุกหน้า (ratio / prop / percent)
+===================================================== */
+
+:root {
+    --game-btn-width: min(260px, calc(100vw - 96px));
+    --game-btn-height: 42px;
+    /* ปุ่มถัดไปอยู่เหนือดอกเดซี่ ปุ่มส่งคำตอบอยู่เหนือปุ่มถัดไป */
+    --game-next-bottom: max(88px, 11dvh);
+    --game-submit-bottom: calc(var(--game-next-bottom) + var(--game-btn-height) + 14px);
+}
+
+body .submit-button,
+body .next-button {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: 10001;
+
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    width: var(--game-btn-width) !important;
+    height: var(--game-btn-height) !important;
+    min-height: var(--game-btn-height) !important;
+    margin: 0 !important;
+    padding: 0 16px !important;
+
+    border: 2px solid #3b2516 !important;
+    border-radius: 50px !important;
+    box-shadow: 0 5px 0 #3b2516 !important;
+
+    font-family: "Kimchi", sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1;
+
+    transform: translateX(-50%) !important;
+    transition: transform 0.15s ease;
+}
+
+body .submit-button {
+    bottom: var(--game-submit-bottom) !important;
+}
+
+body .next-button {
+    bottom: var(--game-next-bottom) !important;
+    font-weight: 700;
+}
+
+body .submit-button:not(:disabled):hover,
+body .next-button:not([hidden]):hover {
+    transform: translateX(-50%) !important;
+}
+
+body .submit-button:not(:disabled):active,
+body .next-button:not([hidden]):active {
+    transform: translate(-50%, 2px) !important;
+    box-shadow: 0 2px 0 #3b2516 !important;
+}
+
+body .next-button[hidden] {
+    display: none !important;
+}
+
+/* เว้นที่ด้านล่างให้ปุ่มทั้งสอง เนื้อหาเกมจะถูกจัดให้อยู่เหนือปุ่ม */
+body {
+    box-sizing: border-box;
+    padding-bottom: calc(var(--game-submit-bottom) + var(--game-btn-height) + 12px) !important;
+}
+
+/* ป๊อปอัปเฉลยต้องอยู่เหนือปุ่มส่งคำตอบ/ถัดไป */
+body .feedback-overlay {
+    z-index: 20000 !important;
+}
+
+/* =====================================================
+   กรอบโจทย์ในเกมท้ายบท — แบบเดียวกับแบบทดสอบรวมบท
+   (สีแดง ขอบดำ มีเงาขอบดำด้านล่าง ตัวหนังสือหนา)
+===================================================== */
+
+body .ask-btn,
+body .ask-btn1,
+body .ask-btn2 {
+    padding: 0.55em 1.1em 0.6em !important;
+
+    background: var(--red, #e5432f) !important;
+    color: #fff !important;
+    border: 2px solid #3b2516 !important;
+    border-radius: 2000px !important;
+    box-shadow: 0 5px 0 #3b2516 !important;
+
+    font-family: "Kimchi", sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    -webkit-text-stroke: 0.9px #3b2516 !important;
+    paint-order: stroke fill;
+}
+
+/* กรอบโจทย์อ่านง่ายบนมือถือ: กว้างขึ้น มุมมนน้อยลง ตัวหนังสือขนาดพอดี */
+body .ask-btn,
+body .ask-btn1,
+body .ask-btn2 {
+    width: min(calc(100vw - 32px), 520px) !important;
+    max-width: 520px !important;
+    border-radius: 16px !important;
+    padding: 0.6em 0.9em 0.65em !important;
+    font-size: clamp(13px, 3.7vw, 15.5px) !important;
+    line-height: 1.5 !important;
+    -webkit-text-stroke: 0.6px #3b2516 !important;
+    margin-top: 92px !important;
+}
+
+/* ด่านที่มีกรอบโจทย์ 2 กรอบ: กรอบที่ 2 ต่อจากกรอบแรกทันที */
+body .ask-container .ask-btn1 {
+    margin-top: 0 !important;
+}
+
+body .ask-container .ask-btn2 {
+    margin-top: 10px !important;
+}
+
+body .ask-container {
+    margin-top: 92px !important;
+}
+
+/* =====================================================
+   ช่องตัวเลขและลูกศรขึ้น-ลง: ขนาดเล็กลง และเว้นระยะจากกรอบโจทย์ ไม่ให้ทับกัน
+===================================================== */
+
+body .ratio-area {
+    margin-top: 28px !important;
+    margin-bottom: 0 !important;
+}
+
+body .number-control {
+    gap: 6px !important;
+}
+
+body .number-box {
+    width: 64px !important;
+    height: 64px !important;
+    font-size: 38px !important;
+}
+
+body .arrow {
+    border-left-width: 14px !important;
+    border-right-width: 14px !important;
+}
+
+body .arrow-up {
+    margin-top: 0 !important;
+    border-bottom-width: 20px !important;
+}
+
+body .arrow-down {
+    border-top-width: 20px !important;
+}
+
+body .colon {
+    font-size: 34px !important;
+}
+
+/* ด่านที่มี 2 กรอบ: ตัวหนังสือเล็กลงเล็กน้อยให้สมดุลกับพื้นที่ */
+body .ask-container .ask-btn1,
+body .ask-container .ask-btn2 {
+    font-size: clamp(12.5px, 3.4vw, 14.5px) !important;
+}
+
+/* =====================================================
+   ลูกโป่งในเกมท้ายบท — ขนาดและตำแหน่งเดียวกับแบบทดสอบรวมบท
+===================================================== */
+
+body .balloon-area {
+    position: relative !important;
+    inset: auto !important;
+    width: min(calc(100vw - 32px), 330px) !important;
+    height: clamp(220px, 62vw, 280px) !important;
+    margin: 28px auto 0 !important;
+    transform: none !important;
+}
+
+body .balloon-area .strings {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+body .balloon-area .balloon {
+    width: 33% !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+    font-size: clamp(17px, 5vw, 22px) !important;
+    margin: 0 !important;
+    transform: none;
+}
+
+body .balloon-area .balloon.red    { left: 4% !important;    top: 30% !important; right: auto !important; }
+body .balloon-area .balloon.green  { left: 33.5% !important; top: 6% !important;  right: auto !important; }
+body .balloon-area .balloon.purple { right: 4% !important;   top: 34% !important; left: auto !important; }
+
+/* หน้าที่มีลูกโป่ง: เรียงจากบนลงล่าง (โจทย์ → ลูกโป่ง) ไม่ให้แต่ละแถวถูกยืดจนลูกโป่งตกไปทับปุ่ม */
+body:has(.balloon-area) {
+    align-content: start !important;
+    grid-template-rows: auto !important;
+}
+
+body .ask-btn,
+body .ask-container {
+    margin-bottom: 0 !important;
+}
+
+/* จอเตี้ย: ย่อพื้นที่ลูกโป่งตามความสูงจอ */
+body .balloon-area {
+    height: clamp(200px, min(62vw, 34vh), 280px) !important;
+}
+
+/* ซ่อนกรอบโจทย์/ตัวเลือกไว้จนจัดระยะเสร็จ แล้วแสดงในตำแหน่งจริงทันที (ไม่เห็นกระโดด) */
+html:not(.gb-ready) .ask-container,
+html:not(.gb-ready) .ask-btn,
+html:not(.gb-ready) .ask-btn1,
+html:not(.gb-ready) .ask-btn2,
+html:not(.gb-ready) .ratio-area,
+html:not(.gb-ready) .balloon-area,
+html:not(.gb-ready) .basket-area {
+    visibility: hidden;
+}
+
+/* จอเตี้ย (มือถือแนวนอน): ปุ่มชิดล่างขึ้น เหลือที่ให้โจทย์และตัวเลือก */
+@media (max-height: 520px) {
+    :root {
+        --game-btn-height: 36px;
+        --game-next-bottom: 10px;
+        --game-submit-bottom: calc(10px + 36px + 8px);
+    }
+
+    body .submit-button,
+    body .next-button {
+        font-size: 14px !important;
+    }
+}
+
+
+
+/* =====================================================
+   STAGE — จัดหน้าเกมท้ายบทใหม่ (stage.js)
+   ซ้าย: โจทย์ / ตัวเลือก / ปุ่ม   ขวา: ภาพประกอบ
+===================================================== */
+html.stage-on body .stage {
+    --fit: 1;
+    --qfs: clamp(17px, 1.1vw + 1.6vh, 30px);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 150px;
+    bottom: 80px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 3vw, 48px);
+    padding: 0 clamp(14px, 4vw, 56px);
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+html.stage-on body .stage > * { pointer-events: auto; }
+
+html.stage-on body .stage-main {
+    flex: 0 1 720px;
+    min-width: 0;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: clamp(10px, 2.4vh, 26px);
+}
+
+html.stage-on body .stage.wide .stage-main { flex: 1.25 1 0; max-width: 680px; }
+
+html.stage-on body .stage-side { display: none; }
+
+html.stage-on body .stage.wide .stage-side {
+    display: flex;
+    flex: 1 1 0;
+    max-width: 440px;
+    max-height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- ภาพประกอบ ---------- */
+html.stage-on body .q-illus {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    line-height: 0;
+}
+
+html.stage-on body .q-illus-svg {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 300px);
+    filter: drop-shadow(0 6px 0 rgba(59, 37, 22, 0.22));
+    overflow: visible;
+}
+
+html.stage-on body .stage:not(.wide) .q-illus-svg {
+    max-height: var(--ih, min(24dvh, 220px));
+    max-width: min(100%, 520px);
+}
+
+/* ---------- กรอบโจทย์ ---------- */
+html.stage-on body .stage :is(.ask-container, .ask-btn, .ask-btn1, .ask-btn2) {
+    position: static !important;
+    margin: 0 !important;
+    translate: none !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+html.stage-on body .stage .ask-container {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 !important;
+}
+
+html.stage-on body .stage :is(.ask-btn, .ask-btn1, .ask-btn2) {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0.55em 0.9em !important;
+    font-size: max(15px, calc(var(--qfs) * var(--fit))) !important;
+    line-height: 1.45 !important;
+    white-space: normal !important;
+    text-wrap: pretty;
+}
+
+html.stage-on body .stage.q-long :is(.ask-btn, .ask-btn1, .ask-btn2) {
+    font-size: max(15px, calc(var(--qfs) * var(--fit) * 0.9)) !important;
+}
+
+html.stage-on body .stage .ask-container :is(.ask-btn1, .ask-btn2) {
+    font-size: calc(var(--qfs) * var(--fit) * 0.86) !important;
+}
+
+/* ---------- ตัวเลือก (ขยาย/ย่อด้วย scale จาก stage.js) ---------- */
+html.stage-on body .stage-area {
+    flex: 0 0 auto;
+    position: relative;
+}
+
+html.stage-on body .stage-area > :is(.ratio-area, .balloon-area, .basket-area) {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    margin: 0 !important;
+    translate: none !important;
+    transform-origin: top left !important;
+}
+
+/* ---------- ปุ่มส่งคำตอบ / ถัดไป อยู่ติดกันใต้ตัวเลือก ---------- */
+html.stage-on body .stage-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 14px;
+    width: 100%;
+    padding-bottom: 6px;
+}
+
+html.stage-on body .stage-actions :is(.submit-button, .next-button) {
+    position: static !important;
+    transform: none !important;
+    translate: none;
+    width: min(280px, 44vw) !important;
+    height: clamp(44px, 6.6vh, 60px) !important;
+    min-height: 0 !important;
+    font-size: clamp(17px, 0.9vw + 1.4vh, 24px) !important;
+}
+
+html.stage-on body .stage-actions :is(.submit-button, .next-button):not(:disabled):hover {
+    transform: none !important;
+    filter: brightness(1.06);
+}
+
+html.stage-on body .stage-actions :is(.submit-button, .next-button):not(:disabled):active {
+    transform: none !important;
+    translate: 0 2px;
+}
+
+/* ตะกร้าลูกบอล: กำหนดขนาดคงที่ แล้วให้ stage.js ขยาย/ย่อทั้งชุดตามพื้นที่ */
+html.stage-on body .stage-area > .basket-area {
+    --ball: 96px;
+    width: 400px !important;
+    height: 186px !important;
+}
+
+html.stage-on body .stage-area > .basket-area .balloon {
+    width: var(--ball) !important;
+    font-size: 26px !important;
+    top: 26px !important;
+}
+
+html.stage-on body .stage-area > .basket-area .basket-back {
+    height: 66px !important;
+    bottom: 12px !important;
+}
+
+html.stage-on body .stage-area > .basket-area::after { bottom: 2px !important; }
+
+html.stage-on body .stage-area > .basket-area .basket-front { display: none !important; }
+
+
+/* ภาพประกอบอยู่ด้านซ้าย โจทย์ + ตัวเลือกอยู่ด้านขวา (แบบเดียวกับแบบทดสอบรวมบท) */
+html.stage-on body .stage.wide .stage-side { order: -1; }
+
+/* เว้นระยะระหว่างโจทย์ ตัวเลือก และปุ่มส่งคำตอบให้พอดี ไม่ชิดกัน */
+html.stage-on body .stage-main { row-gap: clamp(16px, 3.6vh, 40px); }
+
+/* =====================================================
+   เกมท้ายบท: โจทย์อยู่ชิดใต้ห่าน (ไม่ลอยกลางจอ) + ตัวอักษรโจทย์ความหนาปกติ (เท่าโจทย์แบบทดสอบรวมบท)
+===================================================== */
+html.stage-on body .stage { align-items: flex-start; }
+html.stage-on body .stage.wide .stage-side { align-self: center; }
+
+html.stage-on body .stage :is(.ask-btn, .ask-btn1, .ask-btn2) {
+    font-weight: 400 !important;
+}

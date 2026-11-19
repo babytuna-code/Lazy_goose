@@ -1,0 +1,57 @@
+/* percentbasic.css : สไตล์ของแต่ละหัวข้อในหน้านี้ (scope ด้วย .pg-ชื่อหน้าเดิม)
+   โครงการ์ด/ลูกเล่นอยู่ใน ../common/scroll.css และ scroll.js */
+
+/* ===== จากหน้า percentans.html ===== */
+.pg-percentans .big-pct {
+    font-size: 2.4em;
+}
+
+/* ===== จากหน้า percentch3-1.html ===== */
+.pg-percentch3-1 .big-label {
+    font-size: 1.3em;
+}
+
+.pg-percentch3-1 .daily {
+    width: 82%;
+    color: var(--blue);
+    font-size: 1.15em;
+    font-weight: 700;
+    line-height: 1.9;
+}
+
+.pg-percentch3-1 .side-row .goose {
+    width: 34%;
+}
+
+.pg-percentch3-1 .side-row .daily {
+    font-size: 1.05em;
+}
+
+/* ===== จากหน้า percentwatch.html ===== */
+.pg-percentwatch .ratio-line {
+    font-size: 1.15em;
+}
+
+.pg-percentwatch .hl-mint {
+    padding: 0 0.25em;
+    background: var(--mint);
+}
+
+.pg-percentwatch .hl-cream {
+    padding: 0 0.25em;
+    background: var(--cream);
+}
+
+.pg-percentwatch .frac .hl-mint,
+.pg-percentwatch .frac .hl-cream {
+    display: inline-block;
+    line-height: 1.25;
+}
+
+.pg-percentwatch .frac > span:first-child .hl-mint {
+    margin-bottom: 4px;
+}
+
+.pg-percentwatch .frac > span:last-child .hl-cream {
+    margin-top: 4px;
+}

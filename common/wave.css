@@ -1,0 +1,240 @@
+/* =====================================================
+   wave.css — คลื่นสีเขียวด้านบน/ล่าง และเต่าทอง (ทุกหน้า)
+   - กว้างเต็มจอเสมอ ไม่ขาดหาย ทุกขนาดจอ ทั้งแนวตั้งและแนวนอน
+   - ความสูงปรับตามจอ
+===================================================== */
+
+.lg-wave {
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    z-index: 1;
+    pointer-events: none;
+    line-height: 0;
+}
+
+.lg-wave svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* เนินหญ้า 2 ชั้น สีพื้นเรียบ (ไม่ไล่สี): ชั้นหลังเขียวเข้ม / ชั้นหน้าเขียวโทนเดิม + ลายจุดขาวแบบหัวการ์ด
+   ขอบสีน้ำตาลเข้ม */
+.lg-wave .back {
+    fill: #7eb438;
+}
+
+.lg-wave .fill {
+    fill: #beda56;
+}
+
+/* ลายจุดขาวบนเนินชั้นหน้า (ตัดตามรูปคลื่นด้วย mask) */
+.lg-wave::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.34) 2.3px, transparent 2.8px) 0 0 / 18px 18px;
+    -webkit-mask: var(--wave-mask) 0 0 / 100% 100% no-repeat;
+    mask: var(--wave-mask) 0 0 / 100% 100% no-repeat;
+    pointer-events: none;
+}
+
+.lg-wave.bottom {
+    --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 100' preserveAspectRatio='none'%3E%3Cpath d='M0 46 C150 74 260 96 420 92 C620 86 820 26 1000 10 V160 H0 Z'/%3E%3C/svg%3E");
+}
+
+.lg-wave.top {
+    --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 100' preserveAspectRatio='none'%3E%3Cpath d='M0 -60 H1000 V28 C820 -4 620 32 430 68 C300 92 170 96 0 66 Z'/%3E%3C/svg%3E");
+}
+
+.lg-wave .shine {
+    display: none;
+}
+
+.lg-wave .edge {
+    fill: none;
+    stroke: #3b2516;
+    stroke-width: 3px;
+    vector-effect: non-scaling-stroke;
+}
+
+.lg-wave.top {
+    top: 0;
+    height: clamp(30px, 8svh, 120px);   /* สูงเท่าคลื่นด้านล่าง */
+}
+
+.lg-wave.bottom {
+    bottom: 0;
+    height: clamp(30px, 8svh, 120px);
+}
+
+/* เต่าทองเกาะขอบคลื่นด้านบนซ้าย: กึ่งกลางตัวอยู่บนเส้นขอบคลื่นพอดี (แบบใน PDF)
+   - คลื่นด้านบน = คลื่นด้านล่างหมุน 180°: ขอบที่ระยะ 23% ของความกว้างจออยู่ที่ ~61% ของความสูงคลื่น, ที่ 68% อยู่ที่ ~15%
+   - กึ่งกลางลำตัวอยู่ที่กึ่งกลางรูปเต่าทอง (วาดตามเวกเตอร์ใน PDF) */
+.lg-ladybug {
+    display: block;
+    overflow: visible;
+    --wh: clamp(30px, 8svh, 120px);     /* ความสูงคลื่นด้านบน (เท่าด้านล่าง) */
+    --bw: clamp(50px, 10.5svh, 124px);
+    position: fixed;
+    top: max(2px, calc(var(--wh) * 0.61 - var(--bw) * 0.5));
+    left: calc(23vw - var(--bw) * 0.5);
+    width: var(--bw);
+    height: auto;
+    aspect-ratio: 155 / 156;
+    z-index: 1;     /* อยู่หลังกล่องเนื้อหา ไม่บังข้อความ */
+    pointer-events: none;
+    filter: drop-shadow(1px 2px 1.5px rgba(0, 0, 0, 0.25));
+}
+
+/* ซ่อนคลื่นแบบเก่า (ถ้ามีเหลือ) */
+.green-wave,
+.green-wave1 {
+    display: none !important;
+}
+
+/* ดอกเดซี่ 3 ดอก (เวกเตอร์) มุมล่างขวา ยืนอยู่บนคลื่นด้านล่าง แบบใน PDF */
+:root {
+    --bh: clamp(30px, 8svh, 120px);      /* ความสูงคลื่นด้านล่าง */
+    /* ระยะจากขอบล่างจอถึงยอดดอกเดซี่ */
+    --daisy-h: calc(max(100px, calc(var(--bh) * 2.6)) * 0.556);
+    --tree-h: calc(var(--daisy-h) * 1.4);
+    /* ระยะจากขอบล่างจอถึงยอดของตกแต่งที่สูงที่สุด (ต้นไม้) — ปุ่มด้านล่างทุกหน้าจะอยู่เหนือจุดนี้ */
+    --daisy-top: calc(var(--bh) * 0.1 + var(--tree-h));
+}
+
+/* ของตกแต่งบนเนินด้านล่าง: z-index 1 เท่าคลื่น (วางหลังคลื่นใน DOM จึงทับคลื่น) แต่ต่ำกว่าเนื้อหา (z-index 2) → อยู่หลังการ์ด */
+.lg-tree, .lg-grass, .lg-castle {
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    background: center bottom / contain no-repeat;
+}
+
+.lg-tree {
+    left: 2.5vw;
+    bottom: calc(var(--bh) * 0.1);
+    height: var(--tree-h);
+    aspect-ratio: 34 / 34;
+    background-image: url("../pics/la-tree.svg?v=20261119t");
+}
+
+.lg-grass {
+    left: calc(2.5vw + var(--tree-h) * 0.72);
+    bottom: calc(var(--bh) * 0.1);
+    height: calc(var(--tree-h) * 7 / 34 * 1.15);
+    aspect-ratio: 22 / 7;
+    background-image: url("../pics/la-grass.svg?v=20261119t");
+}
+
+.lg-castle {
+    right: 3vw;
+    bottom: calc(var(--bh) * 0.6);
+    visibility: hidden;                 /* theme.js วางบนผิวเนินแล้วจึงแสดง */
+    height: calc(var(--daisy-h) * 0.95);
+    aspect-ratio: 42 / 38;
+    background-image: url("../pics/la-castle.svg?v=20261119t");
+}
+
+/* ดอกเดซี่ก็อยู่หลังการ์ดเช่นกัน (อยู่หน้าปราสาท) */
+html body .lg-daisies { z-index: 1 !important; }
+
+.lg-daisies {
+    position: fixed;
+    right: 7vw;
+    bottom: calc(var(--bh) * 0.12);
+    width: max(100px, calc(var(--bh) * 2.6));
+    height: auto;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* ดอกเดซี่แบบรูปภาพเดิม (ถ้ามีเหลือ) */
+.daisy-container,
+.daisy-bottom {
+    display: none !important;
+}
+
+/* ปุ่มย้อนกลับ/ถัดไปของหน้าเนื้อหา อยู่เหนือดอกเดซี่ ไม่ทับกัน */
+.lesson-nav {
+    margin-bottom: max(10px, calc(var(--daisy-top) + 6px - var(--gap-y, 0px))) !important;
+}
+
+/* หน้าคะแนนท้ายบท: ปุ่มด้านล่างอยู่เหนือดอกเดซี่ */
+.cs-wrap {
+    bottom: calc(var(--daisy-top) + 6px) !important;
+}
+
+/* หน้าที่เต่าทองฝั่งซ้ายไปบังหัวข้อ/เนื้อหา: ย้ายไปเกาะเส้นคลื่นฝั่งขวาแทน (wave.js เป็นตัวเลือกให้) */
+.lg-ladybug.on-right {
+    left: calc(68vw - var(--bw) * 0.5);
+    top: max(2px, calc(var(--wh) * 0.15 - var(--bw) * 0.5));
+}
+
+/* พื้นหลังจุดสีเหลืองต่อเนื่องเต็มจอ ทุกขนาดหน้าจอ
+   (เดิมกรอบเนื้อหาขนาดมือถือมีพื้นจุดของตัวเอง ทำให้ลายจุดตรงกลางไม่ต่อกับด้านข้าง) */
+html,
+body {
+    /* พื้นหลังแบบภาพตัวอย่าง: ครีมเหลือง + ก้อนเมฆเหลืองเรียบไม่มีเส้นขอบ อยู่นิ่ง (ภาพ la-sky.svg เต็มจอ) */
+    background-color: #fff2a6 !important;
+    background-image: url("../pics/la-sky.svg?v=20261119t") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+}
+
+.game-screen,
+.yellow-field {
+    background: transparent !important;
+}
+
+/* คลื่นแบบพิกเซล (theme.js วาดเป็นขั้นบันได): เส้นขอบคม จุดลายเป็นสี่เหลี่ยม */
+.lg-wave.px-wave .edge {
+    stroke-width: 3px;
+    stroke-linejoin: miter;
+    stroke-linecap: square;
+}
+
+.lg-wave.px-wave::after {
+    background: conic-gradient(at 3px 3px, transparent 75%, rgba(255, 255, 255, 0.34) 0) 6px 6px / 15px 15px;
+}
+
+/* image-rendering สืบทอดได้: ให้คมแบบพิกเซลเฉพาะพื้นหลังของ html/body เท่านั้น ส่วนเนื้อหาข้างในกลับเป็นปกติ */
+body > * { image-rendering: auto; }
+
+/* คลื่นแบบพิกเซลไล่สีเขียว (วาดบน canvas โดย theme.js) — ซ่อน SVG เดิมและลายจุด */
+.lg-wave.px-wave-cv-on > svg { visibility: hidden; }
+.lg-wave.px-wave-cv-on::after { display: none !important; }
+.lg-wave .px-wave-cv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+
+/* ดอกเดซี่เล็กลง (ขนาด 75% ของเดิม) */
+html body .lg-daisies { width: calc(max(100px, calc(var(--bh) * 2.6)) * 0.75); }
+
+/* ก่อน theme.js วาดคลื่น: แสดงเนินสีเรียบเหมือนผลสุดท้าย (ไม่มีเส้นขอบดำ/จุดขาวแบบเก่า) → เปลี่ยนหน้าไม่กะพริบ */
+html body .lg-wave .edge { display: none !important; }
+html body .lg-wave::after { display: none !important; }
+html body .lg-wave.px-wave-cv-on > svg { visibility: visible; }
+
+/* ห่านเดินบนเนินหญ้า (หน้าแบบทดสอบ) */
+.lg-walker {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    height: auto;
+    pointer-events: none;
+    transform-origin: 50% 65%;
+    image-rendering: pixelated;
+    will-change: transform;
+}
+
+/* ไม่ให้เนิน SVG (ภาพสำรองก่อน canvas วาด) ล้นออกนอกกรอบคลื่น → ไม่เห็นเป็นลิ่มสีเขียวใต้ขอบ */
+html body .lg-wave svg { overflow: hidden; }

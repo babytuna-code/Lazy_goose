@@ -1,0 +1,2043 @@
+/* =====================================================
+   scroll.css — หน้าเนื้อหาแบบเลื่อน (.lesson-content.scroll-all)
+   ดีไซน์การ์ดน่ารักแบบสติกเกอร์ (อ้างอิง ref ที่ครูส่งมา)
+   - ขอบน้ำตาลเข้มหนา + เงาทึบตกลงด้านล่าง (box-shadow: 0 8px 0)
+   - ส่วนหัวการ์ดสีพาสเทลลายจุดขาว ขอบล่างหยักแบบสแกลลอป
+   - ป้ายตัวเลขวงกลมสีแดงมุมขวาบน / ป้ายภาษาอังกฤษตัวเล็กเหนือหัวข้อ
+   - ปุ่มลอยขึ้นเมื่อชี้ เงายืดออก / กดแล้วยุบ
+   - ลูกเล่นอยู่ใน scroll.js (เด้งขึ้นตอนเลื่อนถึง, ตัวอักษรเด้งทีละตัว, ป๊อปอัปเคล็ดลับ ฯลฯ)
+===================================================== */
+
+:root {
+    --line: #3b2516;                 /* เส้นขอบ/เงาสีน้ำตาลเข้ม */
+    --card: #fffaf0;                 /* พื้นการ์ด */
+    --tone-pink: #f7c6cf;
+    --tone-green: #bfe4b0;
+    --tone-blue: #bcd7f0;
+    --tone-yellow: #ffe08a;
+    --badge: #e5432f;
+}
+
+/* ---------- โครงหน้า ---------- */
+.lesson-content.scroll-all {
+    scroll-padding-top: max(50px, calc(96px - var(--gap-y)));
+    overflow-x: hidden;
+}
+
+.lesson-content.scroll-all > .lesson-sec {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lesson-content.scroll-all > .lesson-sec > .sec-body > .stack {
+    margin: 0 auto;
+}
+
+.lesson-content.scroll-all > * + .lesson-sec {
+    margin-top: 2.6em;
+}
+
+.lesson-content.scroll-all > .lesson-sec:last-child {
+    padding-bottom: 24px;
+}
+
+/* =====================================================
+   หัวหน้า (hero): ป้ายริบบิ้น + ชื่อเรื่องตัวโต ขอบหนา + ห่าน
+===================================================== */
+.page-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35em;
+    padding: 0.4em 0 0.6em;
+    text-align: center;
+}
+
+.hero-ribbon {
+    display: inline-block;
+    padding: 0.3em 1.2em 0.35em;
+    background: var(--badge);
+    color: #fff;
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 0 var(--line);
+    font-size: 0.95em;
+    letter-spacing: 0.06em;
+    transform: rotate(-3deg);
+    margin-bottom: 0.45em;
+}
+
+.hero-title {
+    margin: 0.05em 0 0;
+    font-size: clamp(2.5em, 11cqw, 3.6em);
+    line-height: 1.25;
+    color: #fff;
+    -webkit-text-stroke: 0.2em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.12em 0 var(--line);
+    letter-spacing: 0.02em;
+}
+
+.hero-en {
+    font-size: 0.72em;
+    letter-spacing: 0.32em;
+    color: var(--line);
+    opacity: 0.75;
+}
+
+.hero-goose {
+    width: clamp(110px, 34cqw, 170px);
+    margin-top: 0.2em;
+    animation: lg-bob 2.6s ease-in-out infinite;
+}
+
+/* =====================================================
+   การ์ด
+===================================================== */
+.lesson-sec.card {
+    background: var(--card);
+    border: 3px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 8px 0 var(--line);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    transform-style: preserve-3d;
+}
+
+/* ส่วนหัวการ์ด: พาสเทลลายจุดขาว */
+.card > .sec-head {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    padding: 1.15em 1em 1.25em;
+    border-radius: 19px 19px 0 0;
+    background-color: var(--tone);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 2.3px, transparent 2.8px);
+    background-size: 18px 18px;
+    text-align: center;
+}
+
+/* ขอบล่างหยักแบบสแกลลอป (วงครึ่งวงกลมสีเดียวกับหัวการ์ด ขอบน้ำตาล) */
+.card > .sec-head::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -11px;
+    height: 12px;
+    background:
+        radial-gradient(circle at 11px 0, var(--tone) 8.5px, var(--line) 9px, var(--line) 11.5px, transparent 12px) repeat-x 0 0 / 22px 12px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.tone-pink   { --tone: var(--tone-pink); }
+.tone-green  { --tone: var(--tone-green); }
+.tone-blue   { --tone: var(--tone-blue); }
+.tone-yellow { --tone: var(--tone-yellow); }
+
+/* ป้ายเลขวงกลมสีแดงมุมขวาบน (เหมือนป้ายราคาใน ref) */
+.sec-num {
+    position: absolute;
+    top: -16px;
+    right: 14px;
+    width: 2.7em;
+    height: 2.7em;
+    display: grid;
+    place-items: center;
+    background: var(--badge);
+    color: #fff;
+    border: 3px solid var(--line);
+    border-radius: 50%;
+    box-shadow: 0 4px 0 var(--line);
+    font-size: 1.05em;
+    -webkit-text-stroke: 1px var(--line);
+    paint-order: stroke fill;
+    transform: rotate(8deg);
+    z-index: 3;
+}
+
+.card:hover .sec-num {
+    animation: lg-wiggle 0.6s ease;
+}
+
+/* ป้ายภาษาอังกฤษตัวเล็ก */
+.sec-kicker {
+    font-size: 0.72em;
+    letter-spacing: 0.28em;
+    color: var(--line);
+    opacity: 0.8;
+}
+
+.sec-head .sec-title {
+    margin: 0;
+    max-width: 100%;
+}
+
+/* หัวข้อแบบตัวหนังสือขอบหนา (title-text) ในหัวการ์ด: ไม่ใหญ่เกินไป */
+.sec-head .sec-title.title-text {
+    font-size: 1.7em;
+    line-height: 1.35;
+}
+
+.sec-head .sec-title.title-text.big {
+    font-size: 1.9em;
+}
+
+/* หัวข้อ pill ยาว ๆ ตัดบรรทัดได้ */
+.sec-head .sec-title.pill {
+    white-space: normal;
+    text-wrap: balance;
+}
+
+.sec-head .summary-title.sec-title {
+    margin: 0;
+}
+
+/* ปุ่มเคล็ดลับ / ข้อสังเกต (เปิดป๊อปอัป) */
+.sec-tips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em 0.6em;
+    margin-top: 0.15em;
+}
+
+.sec-tip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.3em 1.1em 0.34em;
+    background: #fffaf0;
+    color: var(--line);
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 0 var(--line);
+    font-family: inherit;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+.sec-tip:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 7px 0 var(--line);
+}
+
+.sec-tip:active {
+    translate: 0 3px;
+    box-shadow: 0 1px 0 var(--line);
+}
+
+.sec-tip:focus-visible {
+    outline: 3px solid var(--green);
+    outline-offset: 3px;
+}
+
+/* เนื้อหาในการ์ด */
+.card > .sec-body {
+    padding: 1.7em 0.9em 1.4em;
+}
+
+/* กล่องเนื้อหาด้านใน: พื้นขาว ขอบ+เงาโทนเข้ม (สีเดียวกับหัวการ์ดแต่เข้มและหม่นลง ไม่ฉูดฉาด) */
+.tone-pink   { --tone-ink: #a85d70; }
+.tone-green  { --tone-ink: #4c7f45; }
+.tone-blue   { --tone-ink: #4a6f98; }
+.tone-yellow { --tone-ink: #a07a24; }
+
+.card .sec-body .box:not(.problem-box) {
+    background: #fffaf0;
+    border: 2.5px solid var(--tone-ink);
+    border-radius: 14px;
+    box-shadow: 0 4px 0 var(--tone-ink);
+}
+
+.card .sec-body .box.bordered {
+    border-color: var(--line);
+    box-shadow: 0 4px 0 var(--line);
+}
+
+/* กล่องคำตอบ "ดังนั้น ..." : ขาว ขอบแดงเข้ม ตัวหนังสือแดงเข้ม */
+.card .sec-body .box.answer {
+    background: #fffaf0;
+    border: 2.5px solid #9e3b2c;
+    box-shadow: 0 4px 0 #9e3b2c;
+    color: #b8321f;
+}
+
+/* กล่องส้ม "ถ้ามี ... ส่วน" : พื้นส้มอ่อน ขอบน้ำตาลส้มเข้ม */
+.card .sec-body .box.orange {
+    background: #fbecd6;
+    border: 2.5px solid #9c6a2e;
+    box-shadow: 0 4px 0 #9c6a2e;
+    color: var(--line);
+}
+
+.card .sec-body .problem-box {
+    border-radius: 14px;
+    border-color: var(--line);
+    box-shadow: 0 6px 0 var(--line);
+}
+
+.card .sec-body .white-strip {
+    border-radius: 10px;
+    border: 2px solid var(--tone-ink);
+}
+
+/* พื้นในการ์ดขาวนวล ให้กล่องขาวมีขอบสีเด่นชัด */
+.lesson-sec.card {
+    background: #fffaf0;
+}
+
+/* หน้าจบ (Finish !) ไม่มีการ์ด */
+.lesson-sec.sec-end .goose {
+    animation: lg-bob 2.6s ease-in-out infinite;
+}
+
+/* =====================================================
+   ปุ่มย้อนกลับ / ถัดไป ของหน้านี้: แบบปุ่มลอยใน ref
+===================================================== */
+body.scroll-page .back-button,
+body.scroll-page .next-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    box-shadow: 0 5px 0 var(--line);
+    color: var(--line);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+body.scroll-page .next-button {
+    background: var(--tone-yellow);
+}
+
+body.scroll-page .back-button::before,
+body.scroll-page .next-button::before {
+    content: "";
+    width: 0.6em;
+    height: 0.6em;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    background: var(--badge);
+}
+
+body.scroll-page .back-button:hover,
+body.scroll-page .next-button:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 8px 0 var(--line);
+}
+
+body.scroll-page .back-button:active,
+body.scroll-page .next-button:active {
+    translate: 0 3px;
+    box-shadow: 0 1px 0 var(--line);
+}
+
+/* =====================================================
+   ป๊อปอัปเคล็ดลับ
+===================================================== */
+.tip-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(59, 37, 22, 0.38);
+    animation: lg-fade 0.2s ease backwards;
+}
+
+.tip-overlay[hidden] {
+    display: none !important;
+}
+
+.tip-card {
+    position: relative;
+    width: min(460px, 100%);
+    max-height: 85dvh;
+    overflow: auto;
+    background: var(--card);
+    border: 3px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 10px 0 var(--line);
+    font-family: "Kimchi", sans-serif;
+    font-size: clamp(15px, calc(0.6vw + 11px), 19px);
+    color: var(--ink);
+    text-align: center;
+    animation: lg-popin 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.tip-card .tip-head {
+    position: relative;
+    padding: 0.9em 3em 1em;
+    background-color: var(--tone-yellow);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 2.3px, transparent 2.8px);
+    background-size: 18px 18px;
+    border-bottom: 3px solid var(--line);
+}
+
+.tip-card .tip-title {
+    font-size: 1.35em;
+    font-weight: 400;
+    color: #fff;
+    -webkit-text-stroke: 0.18em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.1em 0 var(--line);
+}
+
+.tip-card .tip-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8em;
+    padding: 1.2em 1.3em 0.4em;
+    font-size: 1.05em;
+    line-height: 1.6;
+}
+
+.tip-card .tip-arrows {
+    padding: 0.5em 1.1em;
+    background: #fff4cf;
+    border: 2px solid rgba(59, 37, 22, 0.14);
+    border-radius: 14px;
+    line-height: 1.8;
+}
+
+.tip-card .tip-steps {
+    text-align: left;
+    padding-left: 1.6em;
+    line-height: 1.9;
+}
+
+.tip-card .tip-steps li::marker {
+    color: var(--badge);
+}
+
+.tip-close-x {
+    position: absolute;
+    top: 50%;
+    right: 0.7em;
+    transform: translateY(-50%);
+    width: 2em;
+    height: 2em;
+    display: grid;
+    place-items: center;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 50%;
+    box-shadow: 0 3px 0 var(--line);
+    font-family: inherit;
+    font-size: 1em;
+    line-height: 1;
+    color: var(--line);
+    cursor: pointer;
+}
+
+.tip-ok {
+    margin: 1em auto 1.3em;
+    padding: 0.45em 1.6em 0.5em;
+    background: var(--badge);
+    color: #fff;
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 5px 0 var(--line);
+    font-family: inherit;
+    font-size: 1em;
+    -webkit-text-stroke: 0.6px var(--line);
+    paint-order: stroke fill;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tip-ok:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 8px 0 var(--line);
+}
+
+.tip-ok:active {
+    translate: 0 3px;
+    box-shadow: 0 1px 0 var(--line);
+}
+
+/* =====================================================
+   ลูกเล่น (ควบคุมด้วย scroll.js)
+===================================================== */
+
+/* เด้งขึ้นเมื่อเลื่อนถึง */
+.lg-anim .lesson-sec.card:not(.in) {
+    opacity: 0;
+}
+
+.lg-anim .lesson-sec.card.in {
+    animation: lg-rise 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.lg-anim .lesson-sec.card.in .sec-body .stack > * {
+    animation: lg-up 0.5s ease backwards;
+    animation-delay: calc(0.2s + var(--i, 0) * 70ms);
+}
+
+.lg-anim .lesson-sec.card.in .sec-num {
+    animation: lg-badge 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s backwards;
+}
+
+/* ตัวอักษรเด้งทีละตัว */
+.lg-t {
+    display: inline;
+    min-width: 0;
+}
+
+.lg-w {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.lg-ch {
+    display: inline-block;
+}
+
+.lg-anim .hero-title .lg-ch,
+.lg-anim .lesson-sec.card.in .sec-title .lg-ch {
+    animation: lg-hop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation-delay: calc(0.1s + var(--c, 0) * 60ms);
+}
+
+.lg-anim .hero-ribbon {
+    animation: lg-drop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+/* ดอกเดซี่กระจายตอนแตะ */
+.lg-burst {
+    position: fixed;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    z-index: 19000;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 40 40'%3E%3Cg fill='%23fff' stroke='%233b2516' stroke-width='2.2'%3E%3Cellipse rx='4.8' ry='8.6' cy='-9.5'/%3E%3Cellipse rx='4.8' ry='8.6' cy='-9.5' transform='rotate(60)'/%3E%3Cellipse rx='4.8' ry='8.6' cy='-9.5' transform='rotate(120)'/%3E%3Cellipse rx='4.8' ry='8.6' cy='-9.5' transform='rotate(180)'/%3E%3Cellipse rx='4.8' ry='8.6' cy='-9.5' transform='rotate(240)'/%3E%3Cellipse rx='4.8' ry='8.6' cy='-9.5' transform='rotate(300)'/%3E%3C/g%3E%3Ccircle r='5.8' fill='%23ffc75a' stroke='%233b2516' stroke-width='2.2'/%3E%3C/svg%3E") no-repeat center / contain;
+    animation: lg-fly 0.75s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+/* ก้อนเมฆลอยด้านหลัง */
+.lg-cloud {
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+    width: var(--w, 120px);
+    left: 0;
+    top: var(--y, 30%);
+    animation: lg-drift var(--t, 60s) linear infinite;
+    animation-delay: var(--d, 0s);
+    opacity: 0.95;
+}
+
+@keyframes lg-rise {
+    from { opacity: 0; transform: translateY(46px) scale(0.94) rotate(-1deg); }
+}
+
+@keyframes lg-up {
+    from { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes lg-badge {
+    0%   { transform: scale(0) rotate(-40deg); }
+    70%  { transform: scale(1.18) rotate(14deg); }
+    100% { transform: scale(1) rotate(8deg); }
+}
+
+@keyframes lg-hop {
+    0%   { opacity: 0; transform: translateY(0.7em) scale(0.6); }
+    60%  { opacity: 1; transform: translateY(-0.18em) scale(1.08); }
+    100% { transform: none; }
+}
+
+@keyframes lg-drop {
+    from { opacity: 0; transform: translateY(-20px) rotate(-12deg); }
+}
+
+@keyframes lg-bob {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 -8px; }
+}
+
+@keyframes lg-wiggle {
+    0%, 100% { transform: rotate(8deg); }
+    25%      { transform: rotate(-10deg) scale(1.08); }
+    60%      { transform: rotate(16deg); }
+}
+
+@keyframes lg-fade {
+    from { opacity: 0; }
+}
+
+@keyframes lg-popin {
+    0%   { opacity: 0; transform: scale(0.6) translateY(30px); }
+    100% { opacity: 1; transform: none; }
+}
+
+@keyframes lg-fly {
+    0%   { opacity: 1; transform: translate(0, 0) scale(0.4) rotate(0); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--r)); }
+}
+
+@keyframes lg-drift {
+    from { transform: translateX(-30vw); }
+    to   { transform: translateX(130vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-goose,
+    .lesson-sec.sec-end .goose,
+    .lg-cloud {
+        animation: none !important;
+    }
+}
+
+/* =====================================================
+   แท็บเล็ต / ไอแพด / คอม
+===================================================== */
+@media (min-width: 700px) {
+
+    /* พื้นที่เนื้อหากว้างเกือบเต็มจอ ตัวอักษรใหญ่ขึ้นตามความกว้างจอ */
+    html body .game-screen:has(.lesson-content.scroll-all) {
+        width: min(94vw, 1240px) !important;
+        font-size: clamp(15px, calc(0.75vw + 8.5px), 19.5px) !important;
+    }
+
+    html body .lesson-content.scroll-all {
+        padding-left: clamp(10px, 2vw, 28px);
+        padding-right: clamp(10px, 2vw, 28px);
+        padding-bottom: 40px;
+        /* เนื้อหาที่เลื่อนขึ้นไปใต้คลื่นด้านบนค่อย ๆ จางหาย ไม่ทับคลื่น/เต่าทอง */
+        --wh: clamp(36px, 10svh, 140px);
+        -webkit-mask-image: linear-gradient(to bottom, transparent calc(var(--wh) * 0.7), #3b2516 calc(var(--wh) + 14px), #3b2516 calc(100% - 14px), transparent);
+        mask-image: linear-gradient(to bottom, transparent calc(var(--wh) * 0.7), #3b2516 calc(var(--wh) + 14px), #3b2516 calc(100% - 14px), transparent);
+    }
+
+    html body .game-screen .lesson-content.scroll-all > .lesson-sec > .sec-body > .stack {
+        max-width: none;
+        width: 100%;
+        margin: auto 0;
+        gap: 1em;
+    }
+
+    .card > .sec-body {
+        padding: 2em clamp(1.2em, 3vw, 2.6em) 1.8em;
+    }
+
+    .card > .sec-head {
+        padding: 1.2em 4em 1.35em;
+    }
+
+    .sec-num {
+        top: -20px;
+        right: 22px;
+    }
+
+    /* หัวหน้า: ห่านอยู่ข้างชื่อเรื่อง */
+    .page-hero {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: center;
+        align-items: center;
+        column-gap: 1.6em;
+        padding: 0.6em 0 0.4em;
+    }
+
+    .page-hero > :not(.hero-goose) {
+        grid-column: 1;
+        justify-self: center;
+    }
+
+    .hero-goose {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        width: clamp(140px, 16vw, 210px);
+    }
+
+    .hero-title {
+        font-size: clamp(2.8em, 5.4vw, 4.4em);
+    }
+}
+
+/* ---------- จอกว้าง: วางการ์ดเป็นตาราง 2 คอลัมน์ได้ ---------- */
+@media (min-width: 760px) {
+    html body .lesson-content.scroll-all {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 2em;
+        row-gap: 2.8em;
+        align-content: start;
+    }
+
+    html body .lesson-content.scroll-all > * {
+        grid-column: 1 / -1;
+    }
+
+    html body .lesson-content.scroll-all > * + .lesson-sec {
+        margin-top: 0;
+    }
+}
+
+/* =====================================================
+   หน้าแรกของบท (hub): การ์ดเลือกเรื่อง
+===================================================== */
+.hub-intro {
+    max-width: 34em;
+    margin: 0 auto;
+    padding: 0.7em 1.2em;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 5px 0 var(--line);
+    text-align: center;
+    line-height: 1.6;
+}
+
+.hub-intro .note {
+    margin: 0;
+}
+
+.topic-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.2em;
+    width: 100%;
+    margin-top: 2.2em;
+    padding-bottom: 1em;
+}
+
+.topic-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 3px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 8px 0 var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.topic-card:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 12px 0 var(--line);
+}
+
+.topic-card:active {
+    transform: translateY(4px);
+    box-shadow: 0 3px 0 var(--line);
+}
+
+.topic-card:focus-visible {
+    outline: 3px solid var(--green);
+    outline-offset: 4px;
+}
+
+.topic-head {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35em;
+    padding: 1.1em 1em 1.3em;
+    border-radius: 19px 19px 0 0;
+    background-color: var(--tone);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8) 2.3px, transparent 2.8px);
+    background-size: 18px 18px;
+}
+
+.topic-head::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -11px;
+    height: 12px;
+    background: radial-gradient(circle at 11px 0, var(--tone) 8.5px, var(--line) 9px, var(--line) 11.5px, transparent 12px) repeat-x 0 0 / 22px 12px;
+    z-index: 1;
+}
+
+.topic-title {
+    font-size: 1.5em;
+    line-height: 1.35;
+    color: #fff;
+    -webkit-text-stroke: 0.17em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.09em 0 var(--line);
+    text-align: center;
+}
+
+.topic-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6em;
+    padding: 1.6em 1.1em 1.3em;
+    text-align: center;
+}
+
+.topic-en {
+    font-size: 0.7em;
+    letter-spacing: 0.28em;
+    color: var(--line);
+    opacity: 0.7;
+}
+
+.topic-subs {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0;
+    margin: 0;
+}
+
+.topic-subs li {
+    padding: 0.2em 0.8em 0.25em;
+    background: #fff4cf;
+    border: 2px solid rgba(59, 37, 22, 0.16);
+    border-radius: 999px;
+    font-size: 0.85em;
+}
+
+.topic-go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.3em;
+    padding: 0.35em 1.3em 0.4em 0.9em;
+    background: var(--badge);
+    color: #fff;
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 0 var(--line);
+    -webkit-text-stroke: 0.6px var(--line);
+    paint-order: stroke fill;
+}
+
+.topic-go::before {
+    content: "";
+    width: 0.6em;
+    height: 0.6em;
+    background: #fffaf0;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+}
+
+.topic-card:hover .sec-num {
+    animation: lg-wiggle 0.6s ease;
+}
+
+.lg-anim .topic-card {
+    animation: lg-rise 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation-delay: calc(0.35s + var(--i, 0) * 120ms);
+}
+
+@media (min-width: 700px) {
+    .topic-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+        gap: 2.4em 2em;
+    }
+
+    html body .lesson-content.scroll-all > .topic-grid,
+    html body .lesson-content.scroll-all > .hub-intro {
+        grid-column: 1 / -1;
+    }
+}
+
+/* =====================================================
+   บทที่ใช้การ์ดคู่ (อัตราส่วน / ร้อยละ)
+   - แท็บเล็ตแนวตั้ง: การ์ดเต็มแถว เนื้อหากว้างไม่เกิน 640px
+   - จอกว้างตั้งแต่ 1000px: การ์ดวางคู่ 2 ใบต่อแถว
+===================================================== */
+@media (min-width: 700px) {
+    html body .game-screen .lesson-content.scroll-all.layout-pairs > .lesson-sec > .sec-body > .stack {
+        max-width: 640px;
+        margin: auto;
+    }
+}
+
+@media (min-width: 1000px) {
+    html body .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) {
+        grid-column: auto;
+        align-self: start;
+    }
+
+    html body .game-screen .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) > .sec-body > .stack {
+        max-width: 560px;
+    }
+}
+
+/* การ์ดเต็มแถว (โจทย์ยาว / สรุป) บนจอกว้าง: เนื้อหากว้างขึ้น */
+@media (min-width: 1000px) {
+    html body .game-screen .lesson-content.scroll-all.layout-pairs > .lesson-sec.card.span-full > .sec-body > .stack {
+        max-width: 880px;
+    }
+}
+
+/* =====================================================
+   ปรับดีไซน์รอบ 12 พ.ย. (ชุดที่ 2)
+===================================================== */
+
+/* ---------- หัวหน้า: ข้อความอยู่กึ่งกลางจอ ห่านอยู่ด้านขวาของข้อความ ---------- */
+@media (min-width: 700px) {
+    .page-hero {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+
+    .page-hero > :not(.hero-goose) {
+        grid-column: 2;
+    }
+
+    .hero-goose {
+        grid-column: 3;
+        justify-self: start;
+        margin-left: 1.2em;
+    }
+}
+
+/* ---------- เนื้อหานำเรื่องใต้ชื่อเรื่อง (ไม่มีการ์ด) ---------- */
+.hero-lead {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8em;
+    max-width: 36em;
+    margin: 0.2em auto 0;
+    text-align: center;
+    font-size: 1.08em;
+    line-height: 1.6;
+}
+
+.hero-lead .box {
+    width: auto;
+    padding: 0.5em 1.4em 0.6em;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 4px 0 var(--line);
+}
+
+@media (min-width: 760px) {
+    html body .lesson-content.scroll-all > .hero-lead {
+        grid-column: 1 / -1;
+    }
+}
+
+/* ---------- หัวข้อแบบตัวหนังสือ (ไม่มีกรอบ) เช่น "โจทย์ตัวอย่าง" ---------- */
+.sec-head .sec-title.plain-title {
+    font-size: 1.7em;
+    font-weight: 400;
+    line-height: 1.35;
+    color: #fff;
+    -webkit-text-stroke: 0.17em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.09em 0 var(--line);
+}
+
+/* หัวข้อแบบตัวหนังสือขอบหนาในหัวการ์ด: ใหญ่และหนาขึ้น อ่านง่าย */
+.sec-head .sec-title.title-text,
+.sec-head .sec-title.title-text.big {
+    font-size: 2em;
+    line-height: 1.4;
+    -webkit-text-stroke: 0.16em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.08em 0 var(--line);
+    letter-spacing: 0.01em;
+}
+
+.sec-head .sec-title.title-text .red {
+    color: #ff5a4a;
+}
+
+/* ---------- ตัวหนังสือใหญ่มีขอบในเนื้อหา (เช่น ร้อยละ 50 / 33%) : ใส่สี ---------- */
+.tone-pink   { --pop: #ee5a7a; }
+.tone-green  { --pop: #2fa84f; }
+.tone-blue   { --pop: #3d7fd6; }
+.tone-yellow { --pop: #f08a24; }
+
+.card .sec-body .title-text:not(.red),
+.card .sec-body .pct-big {
+    color: var(--pop);
+    -webkit-text-stroke: 0.12em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.07em 0 var(--line);
+}
+
+/* ---------- กล่องโจทย์: กว้างพอดีเนื้อหา ---------- */
+.layout-pairs .card .sec-body .problem-box {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.4em;
+    padding-right: 1.4em;
+}
+
+/* แถบเหลืองเน้นสมการ (โจทย์ที่ดิน): พอดีกับตัวเลข */
+.pg-percentch3-8 .land .hl {
+    justify-self: start;
+    width: fit-content;
+    padding: 0.25em 0.7em;
+    border-radius: 10px;
+}
+
+/* ---------- แฟลชการ์ด 2 ใบในการ์ดเดียว: เล็กลง วางคู่กัน สีเข้าชุดกับการ์ด ---------- */
+.duo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6em;
+    width: 100%;
+    justify-items: center;
+}
+
+.duo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7em;
+    width: 100%;
+    max-width: 300px;
+}
+
+.duo-item .flashcard {
+    font-size: 0.72em;
+    max-width: none !important;
+}
+
+@media (min-width: 560px) {
+    .duo {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .duo-item {
+        max-width: 330px;
+    }
+}
+
+.card .flashcard-face {
+    background-color: var(--tone-yellow);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.75) 2.3px, transparent 2.8px);
+    background-size: 18px 18px;
+    border-color: var(--line);
+    box-shadow: 0 6px 0 var(--line);
+}
+
+.card .flashcard-face.back {
+    background-color: var(--tone-pink);
+}
+
+/* ---------- การ์ดเลือกเรื่อง: เล็กลง 3 ใบอยู่แถวเดียวกัน ---------- */
+.topic-title {
+    font-size: 1.3em;
+}
+
+.topic-head {
+    padding: 0.95em 0.8em 1.1em;
+}
+
+.topic-body {
+    padding: 1.4em 0.9em 1.1em;
+}
+
+@media (min-width: 700px) {
+    .topic-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+        gap: 2em 1.5em;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .topic-grid:has(> :nth-child(2):last-child) {
+        max-width: 720px;
+    }
+}
+
+/* ---------- ท้ายบท (Finish !): หัวข้อและปุ่มใหญ่ขึ้น ---------- */
+.lesson-sec.sec-end .end-title {
+    font-size: clamp(34px, 9cqw, 52px) !important;
+    color: #fff;
+    -webkit-text-stroke: 0.16em var(--line) !important;
+    paint-order: stroke fill;
+    text-shadow: 0 0.09em 0 var(--line);
+}
+
+html body .lesson-sec.sec-end .end-button {
+    width: min(360px, 88%) !important;
+    min-height: 62px;
+    padding: 0.5em 1em !important;
+    font-size: clamp(20px, 5.4cqw, 25px) !important;
+}
+
+@media (min-width: 700px) {
+    html body .lesson-sec.sec-end .end-button {
+        width: min(440px, 80%) !important;
+        min-height: 72px;
+        font-size: 27px !important;
+    }
+
+    html body .lesson-sec.sec-end .goose.lg {
+        width: clamp(260px, 30vw, 380px) !important;
+        max-width: none !important;
+    }
+}
+
+/* ---------- ของตกแต่งในช่องว่างใต้การ์ดที่สั้นกว่าคู่ของมัน (สร้างใน scroll.js) ---------- */
+.gap-deco {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 22px);
+    translate: -50% 0;
+    height: var(--h, 120px);
+    width: auto;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.gap-deco.goose {
+    animation: lg-bob 2.8s ease-in-out infinite;
+}
+
+/* =====================================================
+   ชุดที่ 3: หัวข้อแบบตัวหนังสือมีขอบทั้งหมด / วิธีทำ 2 กล่อง / ปุ่มแบบทดสอบท้ายบท
+===================================================== */
+.sec-head .sec-title.plain-title {
+    max-width: 100%;
+    text-wrap: balance;
+}
+
+.sec-head .sec-title.plain-title.mid {
+    font-size: 1.45em;
+}
+
+.sec-head .sec-title.plain-title.long {
+    font-size: 1.2em;
+    line-height: 1.5;
+    -webkit-text-stroke: 0.2em var(--line);
+}
+
+/* ประโยคคีย์เวิร์ดของหัวข้อ: ใหญ่ เด่น */
+.sec-head .sec-title.plain-title.key {
+    font-size: 1.5em;
+    line-height: 1.45;
+}
+
+.sec-head .sec-title.plain-title .c-blue {
+    color: #9fd0ff;
+}
+
+.sec-head .sec-title.plain-title .frac {
+    font-size: 0.85em;
+}
+
+/* วิธีที่ 1 / วิธีที่ 2 : กล่อง 2 ใบ (ไม่ต้องพลิกการ์ด) */
+.methods {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2em;
+    width: 100%;
+}
+
+.method-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6em;
+    padding: 1em 0.8em 1.1em;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 5px 0 var(--line);
+    text-align: center;
+}
+
+.method-box .box.step {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3em 0.8em;
+    width: 100%;
+    padding: 0.5em 0.8em;
+    text-align: left;
+    font-size: 0.95em;
+}
+
+.method-box .step-value {
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.method-box .circle {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.7em;
+    height: 1.7em;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+
+@media (min-width: 900px) {
+    .methods {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    html body .game-screen .lesson-content.scroll-all.layout-pairs > .lesson-sec.card.span-full:has(.methods) > .sec-body > .stack {
+        max-width: 1040px;
+    }
+}
+
+/* ปุ่มแบบทดสอบท้ายบท (มุมขวาล่าง แทนปุ่มถัดไปในหน้าสุดท้ายของบท) */
+html body .quiz-go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 1.3em 0.55em;
+    background: #e5432f;
+    color: #fff;
+    border: 3px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 6px 0 var(--line);
+    font-family: "Kimchi", sans-serif;
+    font-size: clamp(15px, 4.2vw, 19px);
+    -webkit-text-stroke: 1.2px var(--line);
+    paint-order: stroke fill;
+    cursor: pointer;
+    transition: translate 0.15s ease, box-shadow 0.15s ease;
+    animation: lg-pulse-btn 2.2s ease-in-out infinite;
+}
+
+html body .quiz-go:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 10px 0 var(--line);
+}
+
+html body .quiz-go:active {
+    translate: 0 4px;
+    box-shadow: 0 2px 0 var(--line);
+}
+
+@keyframes lg-pulse-btn {
+    0%, 100% { scale: 1; }
+    50%      { scale: 1.05; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html body .quiz-go { animation: none; }
+}
+
+/* =====================================================
+   ชุดที่ 4 (13 พ.ย.)
+===================================================== */
+
+/* ระยะระหว่างหัวหน้ากับการ์ดแรก: แคบลง */
+.lesson-content.scroll-all > .page-hero + * {
+    margin-top: 1.1em !important;
+}
+
+@media (min-width: 760px) {
+    html body .lesson-content.scroll-all > .page-hero {
+        margin-bottom: -1.5em;
+        padding-bottom: 0;
+    }
+
+    html body .lesson-content.scroll-all > .page-hero + * {
+        margin-top: 0 !important;
+    }
+}
+
+/* หัวการ์ดไม่มีป้ายภาษาอังกฤษแล้ว */
+.card > .sec-head {
+    padding-top: 1.3em;
+}
+
+/* หัวข้อสีแดงล้วนในหัวการ์ด (เช่น ในชีวิตประจำวัน) → ขาวแบบหัวข้ออื่น */
+.sec-head .sec-title.title-text.red {
+    color: #fff;
+}
+
+.sec-head .sec-title.title-text .red {
+    color: #ff8a7a;
+}
+
+/* โจทย์ในกรอบน้ำตาล: ตัวใหญ่ขึ้น อ่านง่าย */
+.card .sec-body .problem-box {
+    font-size: 1.14em;
+    line-height: 1.65;
+    padding-top: 0.7em;
+    padding-bottom: 0.8em;
+}
+
+/* หัวข้อย่อยกลางหน้า */
+.hero-lead.mid-lead {
+    margin-top: 1.2em;
+    padding-top: 0.4em;
+}
+
+.sub-hero {
+    margin: 0;
+    font-size: clamp(1.9em, 8cqw, 2.6em);
+    font-weight: 400;
+    line-height: 1.3;
+    color: #fff;
+    -webkit-text-stroke: 0.18em var(--line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.1em 0 var(--line);
+}
+
+/* ตัวอย่างนาฬิกา: รูปซ้าย ข้อความขวา */
+.watch-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9em;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+}
+
+.watch-row .wc-pic svg {
+    display: block;
+    width: min(240px, 60vw);
+    height: auto;
+}
+
+.watch-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.watch-steps .box {
+    margin: 0;
+    padding: 0.55em 1em;
+    text-align: center;
+}
+
+@media (min-width: 620px) {
+    .watch-row {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        column-gap: 1.6em;
+        max-width: 720px;
+    }
+
+    .watch-row .wc-pic svg {
+        width: 100%;
+        max-width: 260px;
+    }
+}
+
+/* หัวข้อที่เป็นโจทย์: ฟอนต์ปกติในกรอบขาว (ตัวเลข/สัญลักษณ์อ่านชัด) */
+.sec-head .sec-title.q-title {
+    margin: 0;
+    max-width: 100%;
+    padding: 0.5em 1.1em 0.55em;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 4px 0 var(--line);
+    color: var(--line);
+    font-size: 1.12em;
+    font-weight: 400;
+    line-height: 1.6;
+    text-wrap: balance;
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+}
+
+/* =====================================================
+   กิจกรรม "ลองทำดู" (practice.js)
+===================================================== */
+.practice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8em;
+    width: 100%;
+    text-align: center;
+    font-family: "Sarabun", system-ui, sans-serif;
+}
+
+.pr-count {
+    display: inline-block;
+    padding: 0.15em 0.9em 0.2em;
+    background: #fffaf0;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    font-family: "Kimchi", sans-serif;
+    font-size: 0.9em;
+}
+
+.pr-ask {
+    margin: 0;
+    font-family: "Kimchi", sans-serif;
+    font-size: 1.1em;
+    color: var(--line);
+}
+
+.pr-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9em;
+    width: 100%;
+}
+
+.pr-q, .pr-line {
+    margin: 0;
+    padding: 0.7em 1em;
+    width: 100%;
+    max-width: 560px;
+    background: #fffaf0;
+    border: 2.5px solid var(--tone-ink, var(--line));
+    border-radius: 14px;
+    box-shadow: 0 4px 0 var(--tone-ink, var(--line));
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 1.7;
+    box-sizing: border-box;
+}
+
+.pr-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em 0.6em;
+}
+
+.pr-input {
+    width: 3.4em;
+    height: 2em;
+    border: 2.5px solid var(--line);
+    border-radius: 10px;
+    background: #fffdf2;
+    font: inherit;
+    font-weight: 700;
+    text-align: center;
+    color: var(--line);
+}
+
+.pr-input:focus {
+    outline: 3px solid #ffd23f;
+    outline-offset: 1px;
+}
+
+.pr-check, .pr-next, .pr-opt {
+    padding: 0.4em 1.3em 0.45em;
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 5px 0 var(--line);
+    font-family: "Kimchi", sans-serif;
+    font-size: 1em;
+    color: var(--line);
+    background: #fffaf0;
+    cursor: pointer;
+    transition: translate 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pr-check {
+    background: var(--badge);
+    color: #fff;
+    -webkit-text-stroke: 1px var(--line);
+    paint-order: stroke fill;
+}
+
+.pr-next { background: var(--tone-yellow); }
+
+.pr-check:hover, .pr-next:hover, .pr-opt:not(:disabled):hover {
+    filter: brightness(1.06);
+    box-shadow: 0 8px 0 var(--line);
+}
+
+.pr-check:active, .pr-next:active, .pr-opt:not(:disabled):active {
+    translate: 0 3px;
+    box-shadow: 0 1px 0 var(--line);
+}
+
+.pr-opts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7em;
+    width: 100%;
+    max-width: 420px;
+}
+
+.pr-opt { font-family: "Sarabun", system-ui, sans-serif; font-weight: 700; }
+.pr-opts.two .pr-opt { font-family: "Kimchi", sans-serif; font-weight: 400; }
+.pr-opt.ok { background: #bfe4b0; }
+.pr-opt.bad { background: #f7c6cf; }
+.pr-opt:disabled, .pr-check:disabled { opacity: 0.6; cursor: default; }
+
+.pr-fb {
+    min-height: 1.6em;
+    margin: 0;
+    font-family: "Kimchi", sans-serif;
+    font-size: 1.05em;
+}
+
+.pr-fb.ok { color: #12964f; }
+.pr-fb.bad { color: var(--badge); }
+.pr-hint { color: var(--line); font-family: "Sarabun", system-ui, sans-serif; font-size: 0.9em; }
+
+/* ตารางอัตราส่วน */
+.pr-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: min(100%, 300px);
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 4px 0 var(--line);
+    overflow: hidden;
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+.pr-table th {
+    padding: 0.45em 1em;
+    background: var(--tone, #bcd7f0);
+    border-bottom: 2.5px solid var(--line);
+    font-family: "Kimchi", sans-serif;
+    font-weight: 400;
+}
+
+.pr-table td {
+    padding: 0.3em 1em;
+    border-top: 1.5px dashed rgba(59, 37, 22, 0.25);
+}
+
+.pr-table th + th, .pr-table td + td { border-left: 1.5px dashed rgba(59, 37, 22, 0.25); }
+.pr-table tr:first-child td { border-top: none; }
+
+/* รูประบายสี */
+.pr-shape { width: min(190px, 52vw); height: auto; display: block; }
+.pr-shape.wide { width: min(300px, 76vw); }
+.pr-shape .on { fill: var(--pop, #3d7fd6); stroke: var(--line); stroke-width: 1.5; }
+.pr-shape .off { fill: #fff; stroke: var(--line); stroke-width: 1.5; }
+
+/* แถบเทียบสองปริมาณ */
+.pr-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+    max-width: 560px;
+}
+
+.pr-bar-row {
+    display: grid;
+    grid-template-columns: 6.2em minmax(0, 1fr) 3.2em;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 700;
+}
+
+.pr-bar-name { text-align: right; font-size: 0.92em; }
+.pr-bar-sum { text-align: left; }
+
+.pr-bar-track {
+    display: flex;
+    gap: 3px;
+    min-height: 2.1em;
+    padding: 3px;
+    background: #fffaf0;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pr-block {
+    flex: 0 0 calc((100% - (var(--m, 4) - 1) * 3px) / var(--m, 4));
+    display: grid;
+    place-items: center;
+    height: 1.8em;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    box-sizing: border-box;
+    animation: lg-up 0.25s ease backwards;
+}
+
+.pr-block.a { background: var(--tone-yellow); }
+.pr-block.b { background: var(--tone-pink); }
+
+/* ตอบถูก: ดาวเขียวเด้งขึ้นกลางการ์ด */
+.pr-star {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2em;
+    background: rgba(255, 253, 247, 0.82);
+    border-radius: 14px;
+    font-family: "Kimchi", sans-serif;
+    font-size: 1.5em;
+    color: #2fb457;
+    pointer-events: none;
+}
+
+.pr-star[hidden] { display: none; }
+.pr-star svg { width: min(130px, 34vw); height: auto; }
+.pr-star.go svg { animation: pr-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; }
+.pr-star.go span { animation: lg-up 0.35s ease 0.2s backwards; }
+
+@keyframes pr-pop {
+    0%   { transform: scale(0) rotate(-40deg); }
+    100% { transform: none; }
+}
+
+
+/* นาฬิกาข้อมือแบบเวกเตอร์ (ตัวอย่างกำไร 20%) */
+html body .watch-row .wc-pic svg.watch-v {
+    width: min(150px, 38vw);
+    max-width: none;
+    filter: drop-shadow(0 6px 0 rgba(59, 37, 22, 0.18));
+}
+
+/* =====================================================
+   พื้นที่อ่านเนื้อหายาวลงถึงเนินเขียวด้านล่าง
+   ปุ่มย้อนกลับ/ถัดไป ลอยทับมุมล่าง ไม่กินพื้นที่เนื้อหา
+===================================================== */
+html body .game-screen:has(.lesson-content.scroll-all) {
+    height: 100dvh;
+    aspect-ratio: auto;
+    --gap-y: 0px;
+    --wh: clamp(36px, 10svh, 140px);
+}
+
+html body .game-screen:has(.lesson-content.scroll-all) > .lesson-content.scroll-all {
+    margin-bottom: calc(var(--wh) * 0.45);
+    /* เลื่อนสุดแล้วการ์ดสุดท้ายพ้นปุ่มย้อนกลับ/ถัดไปพอดี */
+    padding-bottom: calc(var(--daisy-top, 90px) + 64px - var(--wh) * 0.45);
+}
+
+html body .game-screen:has(.lesson-content.scroll-all) > .lesson-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+html body .game-screen:has(.lesson-content.scroll-all) > .lesson-nav > * {
+    pointer-events: auto;
+}
+
+/* การ์ดหัวข้อในหน้าบท: วงกลมแดงเกาะมุมบนขวาด้านนอก ไม่ทับชื่อหัวข้อ */
+html body .topic-card .sec-num {
+    top: -24px;
+    right: -8px;
+    width: 2.45em;
+    height: 2.45em;
+}
+
+html body .topic-card .topic-head {
+    padding-top: 1.75em;
+    padding-left: 1.1em;
+    padding-right: 1.1em;
+}
+
+.sec-num.sec-icon svg {
+    width: 74%;
+    height: 74%;
+    display: block;
+}
+
+/* ---------- ลองทำดู: ปุ่มตรวจคำตอบ/ข้อถัดไป อยู่ตำแหน่งเดียวกัน ชิดใต้คำตอบ ---------- */
+.pr-actions {
+    display: flex;
+    justify-content: center;
+    min-height: 2.9em;
+}
+
+.pr-actions [hidden] { display: none !important; }
+
+/* แถบเทียบสองปริมาณ: ผลรวมตัวใหญ่สีแดง + ปุ่มกลม − / + แบบปุ่มเกม */
+.pr-bar-row { grid-template-columns: 6.2em minmax(0, 1fr) 4.4em; }
+
+.pr-bar-sum {
+    font-family: "Kimchi", sans-serif;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.pr-bar-sum b {
+    font-weight: 400;
+    font-size: 1.55em;
+    color: var(--badge);
+    vertical-align: -0.08em;
+}
+
+.pr-steps {
+    display: flex;
+    justify-content: center;
+    gap: clamp(28px, 8vw, 64px);
+}
+
+.pr-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45em;
+}
+
+.pr-round {
+    width: 2.1em;
+    height: 2.1em;
+    display: grid;
+    place-items: center;
+    padding: 0 0 0.1em;
+    background: #fffaf0;
+    color: var(--line);
+    border: 3px solid var(--line);
+    border-radius: 50%;
+    box-shadow: 0 6px 0 var(--line);
+    font-family: system-ui, "Sarabun", sans-serif;
+    font-weight: 900;
+    font-size: 1.7em;
+    line-height: 1;
+    cursor: pointer;
+    transition: translate 0.12s ease, box-shadow 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pr-step:last-child .pr-round { background: var(--tone-yellow); }
+.pr-round:not(:disabled):hover { filter: brightness(1.06); }
+.pr-round:not(:disabled):active { translate: 0 5px; box-shadow: 0 1px 0 var(--line); }
+.pr-round:disabled { opacity: 0.45; cursor: default; }
+
+.pr-step-cap {
+    font-family: "Kimchi", sans-serif;
+    font-size: 0.92em;
+    color: var(--line);
+}
+
+/* ระบายสีตามร้อยละ */
+.pr-goal b {
+    font-family: "Kimchi", sans-serif;
+    font-weight: 400;
+    font-size: 1.5em;
+    color: var(--badge);
+}
+
+.pr-shape.paint path,
+.pr-shape.paint rect {
+    cursor: pointer;
+    transition: fill 0.15s ease;
+    outline: none;
+}
+
+.pr-shape.paint .off:hover { fill: #dcebfb; }
+.pr-shape.paint :focus-visible { stroke-width: 3.5; }
+.pr-shape.paint.locked path,
+.pr-shape.paint.locked rect { cursor: default; }
+
+.pr-tally {
+    margin: 0;
+    font-size: 0.95em;
+    font-weight: 700;
+    color: var(--line);
+}
+
+/* บรรทัดอัตราส่วนที่มีหลายช่อง */
+.pr-line.pr-ratio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em 0.45em;
+}
+
+.pr-line.pr-ratio .pr-wide { flex: 1 0 100%; }
+.pr-line.pr-ratio .pr-input { width: 3.3em; }
+
+.pr-big, .pr-colon {
+    font-family: "Kimchi", sans-serif;
+    font-size: 1.35em;
+    white-space: nowrap;
+}
+
+/* ---------- คีย์เวิร์ดของบท: นิยามใต้ชื่อเรื่องใหญ่ (ตัวใหญ่ อ่านเด่น) ---------- */
+html body .lesson-content.scroll-all > .hero-key {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: fit-content;
+    max-width: min(100%, 34em);
+    margin: 0 auto 0.4em;
+    padding: 0.65em 1.4em 0.75em;
+    background: #fffaf0;
+    border: 3px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 6px 0 var(--line);
+    text-align: center;
+    font-size: clamp(1.15em, 0.6em + 1.5vw, 1.6em);
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+html body .lesson-content.scroll-all > .hero-key p {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.6;
+    text-wrap: balance;
+}
+
+/* กรอบ 1 : 4 → ข้อความสีน้ำเงินอยู่ในกรอบ เหนือลูกศรที่ชี้ขึ้นจากจำนวนหลัง */
+html body .ratio-demo .demo-top {
+    margin: 0 0 0.1em;
+    text-align: center;
+    translate: 1.6em 0;
+}
+
+/* ---------- กล่องคู่ซ้าย-ขวา ภายในการ์ด (กรอบสูงเท่ากัน) : ใช้เมื่อการ์ดกว้างพอ ---------- */
+.lesson-sec.card .sec-body { container-type: inline-size; }
+
+.box-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1em;
+    width: 100%;
+    align-items: stretch;
+}
+
+.box-pair > .box,
+.box-pair > .pair-col > .box {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.box-pair > .pair-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8em;
+    min-width: 0;
+}
+
+.box-pair > .pair-col > .box { flex: 1 1 auto; }
+.box-pair > .pair-col > .icon-row { flex: 0 0 auto; min-height: 4.6em; align-items: center; }
+
+@container (min-width: 620px) {
+    .box-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* เศษส่วนในคำใบ้ของลองทำดู */
+.pr-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 0.2em;
+    line-height: 1.25;
+    font-size: 0.95em;
+}
+.pr-frac > span:first-child { border-bottom: 2px solid currentColor; padding: 0 0.3em; }
+.pr-frac > span:last-child { padding: 0 0.3em; }
+
+/* ปุ่มของลองทำดู: ขอบเข้มหนาเท่าปุ่มอื่นของเว็บ และไม่มีวงโฟกัสสีเหลืองทับขอบ */
+.pr-check, .pr-next, .pr-opt { border-width: 3px; }
+.pr-next:focus { outline: none; }
+.pr-next:focus-visible { outline: 3px solid var(--line); outline-offset: 3px; }
+
+/* กล่องคู่ในอัตราส่วนหลายจำนวน: แถวไอคอนสูงเท่ากัน กรอบจึงเริ่มและจบตรงกัน */
+.box-pair > .pair-col > .icon-row { height: 6em; min-height: 0; }
+
+/* =====================================================
+   การ์ดคู่ซ้าย-ขวา (จอกว้าง): สองใบในแถวเดียวกันสูงเท่ากันเสมอ
+   เลื่อนหน้าแล้วไม่มีช่องว่างยาว-สั้นไม่เท่ากัน
+===================================================== */
+@media (min-width: 1000px) {
+    html body .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) {
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+    }
+
+    html body .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) > .sec-body {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    html body .game-screen .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) > .sec-body > .stack {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* กล่องเนื้อหาใบสุดท้ายของการ์ดที่เตี้ยกว่า ยืดลงมาให้ขอบล่างเท่ากับการ์ดคู่ (เช่น กรอบเขียวของ "อัตรา") */
+    html body .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) > .sec-body > .stack > .box:last-child {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* กล่อง "ดังนั้น" ที่มีเศษส่วนอยู่ในประโยค: เรียงต่อกันเป็นบรรทัดเดียว ไม่แยกเป็นแถว */
+    html body .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) > .sec-body > .stack > .box.answer:last-child:has(> .frac) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: center;
+        column-gap: 0.3em;
+    }
+
+    /* การ์ดเกมลองทำดู: จัดเนื้อหาไว้กลางการ์ดเมื่อการ์ดถูกยืดให้เท่าคู่ */
+    html body .lesson-content.scroll-all.layout-pairs > .lesson-sec.card:not(.span-full) > .sec-body > .stack:has(> .practice) {
+        justify-content: center;
+    }
+}
+
+/* ---------- วิธีทำ (เฉลย) ของลองทำดู ---------- */
+.pr-solve-btn {
+    margin-left: 0.3em;
+    padding: 0.15em 0.9em 0.2em;
+    background: #fffaf0;
+    color: var(--line);
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 3px 0 var(--line);
+    font-family: "Kimchi", sans-serif;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+.pr-solve-btn:active { translate: 0 2px; box-shadow: 0 1px 0 var(--line); }
+
+.pr-sol {
+    margin: 0.7em auto 0;
+    padding: 0.7em 1em 0.7em 2.3em;
+    max-width: 32em;
+    background: #fffaf0;
+    border: 2.5px solid var(--line);
+    border-radius: 16px;
+    color: var(--line);
+    font-family: "Sarabun", system-ui, sans-serif;
+    font-size: 0.92em;
+    line-height: 1.75;
+    text-align: left;
+}
+.pr-sol[hidden] { display: none !important; }
+.pr-sol li { padding-left: 0.2em; }
+.pr-sol li:last-child { font-weight: 700; }
+.pr-sol .pr-frac { font-size: 0.92em; }
+
+/* ป๊อปอัปวิธีทำ: รายการวิธีทำอยู่ในการ์ดป๊อปอัป ไม่มีกรอบซ้อน */
+.pr-sol-overlay .pr-sol {
+    margin: 0;
+    max-width: none;
+    padding: 0.2em 0.4em 0.2em 1.7em;
+    background: none;
+    border: 0;
+    font-size: 1em;
+}
+
+/* =====================================================
+   หัวบท/หัวหัวข้อ (ปรับรอบ 15 พ.ย. ค่ำ)
+===================================================== */
+/* กรอบ "ทบทวน" กลางหน้า: กว้างตามข้อความ จอใหญ่ประโยคอยู่บรรทัดเดียว จอเล็กตัดบรรทัดเอง */
+html body .hero-lead .box.review {
+    width: fit-content !important;
+    max-width: 100% !important;
+    padding-left: 1.6em !important;
+    padding-right: 1.6em !important;
+    box-sizing: border-box;
+}
+
+/* นิยามใต้ชื่อเรื่อง (อัตราส่วน / ร้อยละ): ตัวอักษรเล็กลงจากเดิม */
+html body .lesson-content.scroll-all > .hero-key {
+    font-size: clamp(1.05em, 0.55em + 1vw, 1.3em);
+    max-width: min(100%, 44em);
+}
+
+/* หน้าบทสัดส่วน: ตัวอักษรในกรอบขาวใหญ่ขึ้นเล็กน้อย กรอบกว้างตามข้อความ */
+html body .lesson-content.scroll-all > .hub-intro,
+html body .lesson-content > .hub-intro {
+    font-size: 1.15em;
+    width: fit-content;
+    max-width: min(100%, 48em);
+}
+
+@media (min-width: 760px) {
+    /* จอใหญ่: กรอบขาวกับการ์ดหัวข้อด้านล่างชิดกันขึ้น */
+    html body .lesson-content > .hub-intro + .topic-grid {
+        margin-top: 1.2em !important;
+    }
+}
+
+/* มือถือ: ห่านในหัวบทเป็นภาพสี่เหลี่ยมที่มีที่ว่างโปร่งใสด้านบน/ล่างเยอะ → ดึงชิดชื่อเรื่องและกรอบขาว */
+@media (max-width: 759px) {
+    html body .page-hero .hero-goose {
+        --hg: clamp(110px, 34cqw, 170px);
+        width: var(--hg);
+        margin-top: calc(var(--hg) * -0.2);
+        margin-bottom: calc(var(--hg) * -0.2);
+    }
+    html body .page-hero { gap: 0.2em; padding-bottom: 0.2em; }
+}
+
+/* ป๊อปอัป (ข้อสังเกต / วิธีทำ) อยู่เหนือทุกอย่าง รวมปุ่มย้อนกลับ-ถัดไป ปราสาท ดอกเดซี่ */
+html body .tip-overlay { z-index: 30000 !important; }
+
+/* ป๊อปอัปใช้สีเดียวกับการ์ดที่กดปุ่มมา: เปลี่ยนเฉพาะแถบหัวเป็นสีพาสเทลของการ์ด ขอบ/เส้นอื่นเหมือนเดิม */
+.tip-overlay[data-tone="pink"]   { --tone: var(--tone-pink);   --tone-ink: #a85d70; }
+.tip-overlay[data-tone="green"]  { --tone: var(--tone-green);  --tone-ink: #4c7f45; }
+.tip-overlay[data-tone="blue"]   { --tone: var(--tone-blue);   --tone-ink: #4a6f98; }
+.tip-overlay[data-tone="yellow"] { --tone: var(--tone-yellow); --tone-ink: #a07a24; }
+.tip-overlay[data-tone] .tip-card .tip-head { background-color: var(--tone); }
+
+/* ข้อแบบเลือกตอบไม่มีปุ่มตรวจคำตอบ: ไม่เว้นที่ว่างของแถวปุ่ม → ข้อความผล + ปุ่มดูวิธีทำ อยู่ชิดใต้ตัวเลือก */
+.pr-actions:not(:has(> :not([hidden]))) { min-height: 0; margin: 0 !important; }
+
+/* โจทย์อัตรา: ข้อความต่อกันเป็นย่อหน้า ช่องคำตอบต่อท้าย "เป็น" */
+.pr-line.pr-flow {
+    display: block;
+    text-align: center;
+    line-height: 2.1;
+    text-wrap: pretty;
+}
+.pr-line.pr-flow .pr-tail { white-space: nowrap; }
+.pr-line.pr-flow .pr-tail .pr-input { display: inline-block; vertical-align: middle; margin: 0 0.35em; }
+
+/* นิยามใต้ชื่อบท: จอใหญ่พิมพ์ยาวบรรทัดเดียว กว้างได้เต็มแนวการ์ด (ขอบการ์ดซ้ายถึงขวา) */
+@media (min-width: 760px) {
+    .br-sm { display: none; }
+    html body .lesson-content.scroll-all > .hero-key {
+        max-width: 100% !important;
+        width: fit-content;
+        justify-self: center;
+        box-sizing: border-box;
+    }
+}
+
+/* หัวการ์ดที่ถูกยืดให้สูงเท่าการ์ดคู่ (theme.js): จัดหัวข้อไว้กลางแนวตั้ง */
+.layout-pairs > .lesson-sec.card > .sec-head {
+    justify-content: center;
+}
+
+/* หัวข้อการ์ดหน้ารวมบท: กลุ่มคำที่ไม่ให้ตัดบรรทัด (เช่น "หลาย ๆ จำนวน") */
+.topic-title .nw { white-space: nowrap; }
