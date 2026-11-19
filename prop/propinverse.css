@@ -1,0 +1,338 @@
+/* propinverse.css : สไตล์ของแต่ละหัวข้อในหน้านี้ (scope ด้วย .pg-ชื่อหน้าเดิม)
+   โครงการ์ด/ลูกเล่นอยู่ใน ../common/scroll.css และ scroll.js */
+
+/* ===== จากหน้า propch2-2.html ===== */
+.pg-propch2-2 .head-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2em;
+    width: 100%;
+}
+
+.pg-propch2-2 .head-row .goose {
+    width: 34%;
+    flex-shrink: 0;
+}
+
+.pg-propch2-2 .ptable {
+    display: grid;
+    grid-template-columns: 1fr 3em 3em 1fr;
+    grid-template-rows: 2.4em repeat(5, minmax(2.9em, auto));
+    width: 100%;
+    font-weight: 600;
+}
+
+.pg-propch2-2 .pt-h {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #13a85a;
+    color: #fff;
+    border: 2px solid var(--ink);
+    font-size: 1.3em;
+    font-weight: 700;
+    -webkit-text-stroke: 0.8px var(--ink);
+    paint-order: stroke fill;
+}
+
+.pg-propch2-2 .pt-h + .pt-h {
+    border-left: none;
+}
+
+.pg-propch2-2 .pt-c {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d4f2dc;
+    border: 1px solid var(--ink);
+    font-size: 1.2em;
+}
+
+.pg-propch2-2 .pt-c.r {
+    box-shadow: inset 0 0 0 3px var(--red);
+}
+
+.pg-propch2-2 .pt-c.p {
+    box-shadow: inset 0 0 0 3px var(--blue);
+}
+
+.pg-propch2-2 .pt-arc {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.3em 0;
+}
+
+.pg-propch2-2 .pt-arc.left {
+    justify-content: flex-end;
+}
+
+.pg-propch2-2 .arc-line {
+    position: relative;
+    align-self: stretch;
+    width: 1em;
+    border: 2px solid var(--ink);
+}
+
+.pg-propch2-2 .pt-arc.left .arc-line {
+    border-right: none;
+    border-radius: 1em 0 0 1em;
+    margin-right: 0.2em;
+}
+
+.pg-propch2-2 .pt-arc.right .arc-line {
+    border-left: none;
+    border-radius: 0 1em 1em 0;
+    margin-left: 0.2em;
+    order: -1;
+}
+
+.pg-propch2-2 .arc-line::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    border: 5px solid transparent;
+    border-left: 8px solid var(--ink);
+}
+
+.pg-propch2-2 .pt-arc.left .arc-line::after {
+    right: -6px;
+}
+
+.pg-propch2-2 .pt-arc.right .arc-line::after {
+    left: -8px;
+    border-left: 5px solid transparent;
+    border-right: 8px solid var(--ink);
+}
+
+.pg-propch2-2 .arc-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.2em;
+    text-align: center;
+}
+
+.pg-propch2-2 .arc-note {
+    font-size: 0.78em;
+    font-weight: 600;
+    line-height: 1.45;
+    text-wrap: balance;
+}
+
+.pg-propch2-2 .arc-note .frac {
+    font-size: 0.95em;
+    margin: 0 0.1em;
+}
+
+.pg-propch2-2 .arc-mult {
+    margin-top: 0.1em;
+}
+
+.pg-propch2-2 .arc-mult {
+    font-size: 1.1em;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.pg-propch2-2 .white-strip {
+    width: 100%;
+    padding: 0.35em;
+    background: #fffaf0;
+}
+
+.pg-propch2-2 .formula-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.pg-propch2-2 .fbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+    padding: 0.4em 0.7em;
+    font-weight: 700;
+    font-size: 1.05em;
+}
+
+.pg-propch2-2 .fbox.white {
+    background: #fffaf0;
+}
+
+.pg-propch2-2 .fbox.red {
+    background: var(--red);
+    color: #fff;
+}
+
+.pg-propch2-2 .fbox.purple {
+    background: var(--blue);
+    color: #fff;
+}
+
+.pg-propch2-2 .white-strip {
+    margin-top: 0.9em;
+    line-height: 1.5;
+    text-wrap: balance;
+}
+
+.pg-propch2-2 > .sec-body > .stack > p.b {
+    line-height: 1.6;
+    text-wrap: pretty;
+}
+
+/* ===== จากหน้า propch2-6.html ===== */
+.pg-propch2-6 .word-eq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35em;
+    padding: 0.8em 0.9em;
+    font-size: 0.92em;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.pg-propch2-6 .word-eq .frac {
+    max-width: 100%;
+    text-wrap: balance;
+}
+
+.pg-propch2-6 .word-eq .eq-sign {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.pg-propch2-6 .calc-box {
+    display: flex;
+    justify-content: center;
+}
+
+.pg-propch2-6 .eq {
+    grid-template-columns: auto auto auto;
+    column-gap: 0.8em;
+    row-gap: 0.75em;
+    font-size: 1.05em;
+    font-weight: 700;
+}
+
+.pg-propch2-6 .eq .cross-line {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-bottom: 0.4em;
+    font-size: 1.1em;
+}
+
+.pg-propch2-6 .side-notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.pg-propch2-6 .side-notes .cloud {
+    width: 92%;
+    text-wrap: balance;
+}
+
+.pg-propch2-6 .side-notes .note {
+    font-size: 0.95em;
+    text-wrap: balance;
+}
+
+.pg-propch2-6 > .sec-body > .stack {
+    gap: 10px;
+}
+
+.pg-propch2-6 .box {
+    padding: 0.6em 0.9em;
+    line-height: 1.6;
+    text-wrap: pretty;
+}
+
+.pg-propch2-6 .problem-box {
+    padding: 0.6em 0.9em;
+    line-height: 1.65;
+    font-size: 0.92em;
+}
+
+.pg-propch2-6 .red-title {
+    line-height: 1.55;
+}
+
+.pg-propch2-6 .calc-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+}
+
+@media (min-width: 700px) {
+.pg-propch2-6 .calc-row {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        align-items: center;
+        gap: 18px;
+}
+
+.pg-propch2-6 .calc-row .side-notes .cloud {
+        width: 100%;
+}
+
+.pg-propch2-6 > .sec-body > .stack > .word-eq {
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.8em;
+}
+}
+
+/* ===== จากหน้า propch2-7.html ===== */
+.pg-propch2-7 .center {
+    margin-top: 0.6em;
+    text-align: center;
+}
+
+/* ===== จากหน้า propch2-8.html ===== */
+.pg-propch2-8 > .sec-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pg-propch2-8 > .sec-body > .stack {
+    gap: 14px;
+}
+
+.pg-propch2-8 .end-title {
+    margin-top: -4px;
+    font-size: clamp(26px, 8cqw, 34px);
+    line-height: 1.3;
+    letter-spacing: 0.03em;
+    -webkit-text-stroke: 2px var(--ink);
+}
+
+.pg-propch2-8 .end-button {
+    width: min(250px, 80%);
+    padding: 12px 3px;
+    border: 2px solid var(--ink);
+    border-radius: 2000px;
+    box-shadow: 0 5px 0 var(--ink);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-stroke: 2px var(--ink);
+}
+
+.pg-propch2-8 .end-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--ink);
+}
+
+.pg-propch2-8 > .sec-body .goose.lg {
+    width: clamp(260px, 96cqw, 420px);
+    margin-bottom: -34px;
+}
